@@ -302,7 +302,7 @@
       ${group("Organizations, most connected first", orgs.map(n => chip(n, n.sub)))}
       ${group("Meetings and events", events.map(n => chip(n, n.date + " · " + n.sub)))}
     `;
-    try { history.replaceState(null, "", "#money"); } catch (e) {}
+    if ((location.hash || "").startsWith("#rs-")) try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
   }
 
   panel.addEventListener("click", e => {
