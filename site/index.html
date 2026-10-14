@@ -262,6 +262,10 @@
         @media (max-width: 767px) { .sources { grid-template-columns: 1fr; } }
 
         .heading-section .heading-title { font-size: clamp(40px, 6vw, 72px); line-height: 1.02; }
+        .pt-visits { display: flex; justify-content: center; gap: 48px; padding: 48px 16px 0; text-align: center; }
+        .pt-visits .n { font-size: 32px; font-weight: 700; color: var(--neutral-900, #111); line-height: 1; font-variant-numeric: tabular-nums; }
+        .pt-visits .l { margin-top: 8px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--neutral-500); }
+        @media (max-width: 575px) { .pt-visits { gap: 28px; } .pt-visits .n { font-size: 26px; } }
         footer.pt-foot { padding: 40px 0 60px; color: var(--neutral-500); font-size: 14px; text-align: center; }
         @media (max-width: 575px) { .container { padding-left: 16px; padding-right: 16px; } .hero-lede { font-size: 17px; } }
     </style>
@@ -1201,9 +1205,20 @@
         </div>
     </div>
 
+    <section class="pt-visits" aria-label="Visitors">
+        <div><div class="n" id="v-hour">–</div><div class="l">Visitors past hour</div></div>
+        <div><div class="n" id="v-day">–</div><div class="l">Past day</div></div>
+        <div><div class="n" id="v-week">–</div><div class="l">Past week</div></div>
+    </section>
     <footer class="pt-foot">Irkutsk Plague Timeline · compiled October 14, 2026 · built on the Aigocy template</footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="assets/board-data.js"></script>
     <script src="assets/board.js"></script>
+    <script>
+        fetch("/api/visits", { method: "POST" }).then(r => r.ok ? r.json() : null).then(c => {
+            if (!c) return;
+            for (const k of ["hour", "day", "week"]) document.getElementById("v-" + k).textContent = c[k].toLocaleString();
+        }).catch(() => {});
+    </script>
 </body>
 </html>
