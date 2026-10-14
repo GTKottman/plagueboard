@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Irkutsk Plague Timeline</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The Irkutsk plague scare from the August drill to the October 14 leak, as told by Chinese and Russian media, with every claim marked official, reported or rumor.">
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700&display=swap">
+    <link rel="shortcut icon" href="assets/images/logo/favicon.svg">
+    <style>
+        :root {
+            --official: #2F7D5B;
+            --reported: #3D6FB6;
+            --rumor: var(--brand);
+        }
+        html { scroll-behavior: smooth; }
+        body { background: var(--body); overflow-x: hidden; }
+        body, h1, h2, h3, h4, p, li, span, div, a, blockquote { font-family: "Urbanist", "Noto Sans SC", sans-serif; }
+
+        /* header */
+        .pt-header { position: fixed; top: 24px; left: 0; right: 0; z-index: 50; display: flex; justify-content: center; padding: 0 16px; }
+        .pt-header .inner { display: flex; align-items: center; gap: 28px; padding: 8px 8px 8px 28px; border-radius: 99px;
+            background: rgba(237, 236, 236, .78); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 10px 30px rgba(0,0,0,.08); max-width: 100%; }
+        .pt-header .brand { font-weight: 700; font-size: 18px; letter-spacing: -.02em; color: var(--primary); white-space: nowrap; }
+        .pt-header nav { display: flex; gap: 22px; }
+        .pt-header nav a { font-weight: 500; color: var(--primary); white-space: nowrap; }
+        .pt-header nav a:hover { color: var(--brand); }
+        .pt-header .tf-btn { padding: 10px 20px; }
+        @media (max-width: 991px) { .pt-header nav { display: none; } }
+        @media (max-width: 575px) { .pt-header .tf-btn { display: none; } .pt-header .inner { padding: 12px 22px; } }
+
+        /* hero */
+        .section-hero.v1 { position: relative; }
+        .section-hero.v1 .content-wrap { padding: 190px 0 110px; position: relative; z-index: 2; }
+        .hero-kicker { display: inline-flex; gap: 10px; align-items: center; padding: 8px 18px; border-radius: 99px;
+            background: rgba(255,255,255,.55); font-weight: 600; color: var(--neutral-800); margin-bottom: 32px; }
+        .hero-kicker .dot { width: 8px; height: 8px; border-radius: 99px; background: var(--brand); box-shadow: 0 0 0 6px rgba(253,58,37,.18); }
+        .hero-title { font-size: clamp(44px, 8vw, 112px); line-height: .98; letter-spacing: -.045em; font-weight: 600; }
+        .hero-title .accent { color: var(--brand); -webkit-text-fill-color: var(--brand); }
+        .hero-lede { max-width: 720px; margin: 28px auto 0; font-size: 20px; line-height: 1.55; color: var(--neutral-700); }
+        .hero-meta { margin-top: 36px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+        .hero-meta span { padding: 8px 16px; border-radius: 99px; background: rgba(255,255,255,.6); font-weight: 600; font-size: 14px; color: var(--neutral-700); }
+
+        /* answer box */
+        .answer { display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px; }
+        .answer .verdict { border-radius: 32px; padding: 48px; background: var(--neutral-900); color: var(--white); position: relative; overflow: hidden; }
+        .answer .verdict::after { content: ""; position: absolute; width: 380px; height: 380px; right: -120px; bottom: -160px; border-radius: 50%;
+            background: radial-gradient(circle, rgba(253,58,37,.45), transparent 65%); }
+        .answer .verdict h3 { color: var(--white); font-size: 40px; line-height: 1.1; letter-spacing: -.03em; font-weight: 600; margin-bottom: 20px; position: relative; z-index: 1; }
+        .answer .verdict p { color: var(--neutral-300); font-size: 18px; line-height: 1.6; position: relative; z-index: 1; }
+        .answer .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .fact { border-radius: 24px; padding: 28px; background: var(--neutral-50); box-shadow: 0 1px 0 #fff inset, 0 3px 3px rgba(0,0,0,.06); }
+        .fact .num { font-size: 52px; line-height: 1; font-weight: 600; letter-spacing: -.04em; color: var(--primary); }
+        .fact .num.red { color: var(--brand); }
+        .fact .lbl { margin-top: 10px; color: var(--neutral-600); font-size: 15px; line-height: 1.45; }
+        .fact .tag { margin-top: 12px; }
+        @media (max-width: 991px) { .answer { grid-template-columns: 1fr; } .answer .verdict { padding: 32px; } .answer .verdict h3 { font-size: 30px; } }
+        @media (max-width: 480px) { .answer .facts { grid-template-columns: 1fr; } }
+
+        /* tags + legend */
+        .tag { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+            padding: 5px 12px; border-radius: 99px; }
+        .tag::before { content: ""; width: 7px; height: 7px; border-radius: 99px; background: currentColor; }
+        .tag.official { color: var(--official); background: rgba(47,125,91,.1); }
+        .tag.reported { color: var(--reported); background: rgba(61,111,182,.1); }
+        .tag.rumor { color: var(--rumor); background: rgba(253,58,37,.1); }
+        .legend { display: flex; flex-wrap: wrap; gap: 24px; padding: 24px 28px; border-radius: 24px; background: var(--neutral-50); margin-bottom: 64px; }
+        .legend .item { display: flex; gap: 12px; align-items: center; color: var(--neutral-600); font-size: 15px; }
+
+        /* phase nav */
+        .phase-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+        .phase-nav a { padding: 10px 18px; border-radius: 99px; background: var(--neutral-50); font-weight: 600; color: var(--neutral-700);
+            box-shadow: 0 -2px 0 #E9E9E9 inset, 0 2px 3px rgba(0,0,0,.08); }
+        .phase-nav a:hover { color: var(--brand); }
+
+        /* timeline */
+        .phase { margin-bottom: 96px; scroll-margin-top: 120px; }
+        .phase-head { display: grid; grid-template-columns: 220px 1fr; gap: 40px; align-items: end; margin-bottom: 40px; }
+        .phase-head .when { font-size: 15px; font-weight: 700; color: var(--brand); letter-spacing: .04em; text-transform: uppercase; }
+        .phase-head h2 { font-size: 56px; line-height: 1.02; letter-spacing: -.035em; font-weight: 600; }
+        .phase-head p { grid-column: 2; color: var(--neutral-600); font-size: 18px; line-height: 1.6; max-width: 760px; margin-top: -16px; }
+        .tl { position: relative; }
+        .tl::before { content: ""; position: absolute; left: 219px; top: 8px; bottom: 8px; width: 2px; background: var(--neutral-300); }
+        .ev { display: grid; grid-template-columns: 220px 1fr; gap: 40px; position: relative; padding-bottom: 20px; }
+        .ev .date { text-align: right; padding-right: 28px; padding-top: 26px; }
+        .ev .date .d { font-size: 28px; font-weight: 600; letter-spacing: -.03em; color: var(--primary); line-height: 1; }
+        .ev .date .y { font-size: 13px; color: var(--neutral-500); margin-top: 6px; font-weight: 600; }
+        .ev::before { content: ""; position: absolute; left: 213px; top: 30px; width: 14px; height: 14px; border-radius: 99px;
+            background: var(--neutral-50); border: 3px solid var(--neutral-400); z-index: 1; }
+        .ev.official::before { border-color: var(--official); }
+        .ev.reported::before { border-color: var(--reported); }
+        .ev.rumor::before { border-color: var(--rumor); background: var(--rumor); }
+        .ev.key::before { width: 22px; height: 22px; left: 209px; top: 26px; box-shadow: 0 0 0 8px rgba(253,58,37,.15); }
+        .card { border-radius: 24px; padding: 28px 32px; background: var(--neutral-50); box-shadow: 0 1px 0 #fff inset, 0 3px 3px rgba(0,0,0,.06); }
+        .ev.rumor .card { background: #FFF6F4; box-shadow: 0 0 0 1px rgba(253,58,37,.18) inset; }
+        .ev.key .card { background: var(--neutral-900); }
+        .ev.key .card h4, .ev.key .card p, .ev.key .card li { color: var(--neutral-200); }
+        .ev.key .card h4 { color: var(--white); }
+        .ev.key .card .src { color: var(--neutral-400); border-color: var(--neutral-700); }
+        .card .top { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 12px; }
+        .card h4 { font-size: 24px; line-height: 1.25; letter-spacing: -.02em; font-weight: 600; margin-bottom: 10px; }
+        .card p, .card li { color: var(--neutral-700); font-size: 17px; line-height: 1.6; }
+        .card p + p { margin-top: 10px; }
+        .card ul { padding-left: 20px; margin-top: 8px; list-style: disc; }
+        .card li + li { margin-top: 4px; }
+        .card .zh { display: block; margin-top: 10px; font-size: 15px; color: var(--neutral-500); }
+        .card .src { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--neutral-200); font-size: 14px; color: var(--neutral-500); }
+        .card .src a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+        .card .src a:hover { color: var(--brand); }
+        @media (max-width: 991px) {
+            .phase-head { grid-template-columns: 1fr; gap: 12px; }
+            .phase-head p { grid-column: 1; margin-top: 0; }
+            .phase-head h2 { font-size: 40px; }
+            .tl::before { left: 7px; }
+            .ev { grid-template-columns: 1fr; gap: 10px; padding-left: 36px; padding-bottom: 28px; }
+            .ev::before { left: 0; top: 4px; }
+            .ev.key::before { left: -4px; top: 0; }
+            .ev .date { text-align: left; padding: 0; display: flex; gap: 10px; align-items: baseline; }
+            .ev .date .d { font-size: 22px; }
+            .ev .date .y { margin: 0; }
+            .card { padding: 22px; }
+            .card h4 { font-size: 20px; }
+        }
+
+        /* leak section */
+        .section-statistic { padding: 120px 0; }
+        .section-statistic .line { display: none; }
+        .leak-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 56px; }
+        .leak-card { border-radius: 28px; padding: 36px; background: var(--neutral-800); }
+        .leak-card h4 { color: var(--white); font-size: 26px; letter-spacing: -.02em; font-weight: 600; margin: 14px 0 14px; }
+        .leak-card p, .leak-card li { color: var(--neutral-300); font-size: 17px; line-height: 1.6; }
+        .leak-card ul { padding-left: 20px; list-style: disc; }
+        .leak-card li + li { margin-top: 8px; }
+        .leak-card blockquote { margin: 16px 0; padding: 16px 20px; border-left: 3px solid var(--brand); background: rgba(255,255,255,.04);
+            border-radius: 0 14px 14px 0; color: var(--neutral-200); font-size: 16px; line-height: 1.6; }
+        .leak-card blockquote .zh { display: block; color: var(--neutral-500); font-size: 14px; margin-top: 6px; }
+        .checks { margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .check { border-radius: 24px; padding: 28px; background: var(--neutral-800); }
+        .check .k { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--brand); margin-bottom: 10px; }
+        .check p { color: var(--neutral-300); font-size: 16px; line-height: 1.6; }
+        @media (max-width: 991px) { .leak-grid, .checks { grid-template-columns: 1fr; } .section-statistic { padding: 80px 0; } .leak-card { padding: 26px; } }
+
+
+        /* follow the money */
+        .money-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .mcard { border-radius: 28px; padding: 36px; background: var(--neutral-50); box-shadow: 0 1px 0 #fff inset, 0 3px 3px rgba(0,0,0,.06); }
+        .mcard.wide { grid-column: 1 / -1; }
+        .money-grid > *, .web > *, .answer > *, .leak-grid > *, .checks > * { min-width: 0; }
+        .mcard .k { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--brand); margin-bottom: 10px; }
+        .mcard h3 { font-size: 30px; line-height: 1.15; letter-spacing: -.025em; font-weight: 600; margin-bottom: 14px; }
+        .mcard p, .mcard li { color: var(--neutral-700); font-size: 17px; line-height: 1.6; }
+        .mcard p + p { margin-top: 10px; }
+        .mcard ul { padding-left: 20px; list-style: disc; margin-top: 8px; }
+        .mcard li + li { margin-top: 6px; }
+        .tbl-wrap { overflow-x: auto; margin-top: 16px; -webkit-overflow-scrolling: touch; }
+        table.stk { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 640px; }
+        table.stk th { text-align: left; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--neutral-500); padding: 10px 12px; border-bottom: 1px solid var(--neutral-200); }
+        table.stk td { padding: 12px; border-bottom: 1px solid var(--neutral-200); color: var(--neutral-800); vertical-align: top; }
+        table.stk td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+        table.stk .up { color: #2F7D5B; font-weight: 600; }
+        table.stk .dn { color: var(--brand); font-weight: 600; }
+        table.stk .flag { background: #FFF6F4; }
+        .web { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+        .node { border-radius: 20px; padding: 20px 22px; background: var(--white); box-shadow: 0 0 0 1px var(--neutral-200) inset; }
+        .node b { display: block; font-size: 17px; margin-bottom: 6px; color: var(--primary); }
+        .node span { color: var(--neutral-600); font-size: 15px; line-height: 1.5; display: block; }
+        .bottom-line { margin-top: 24px; border-radius: 28px; padding: 36px; background: var(--neutral-900); }
+        .bottom-line h3 { color: var(--white); font-size: 30px; letter-spacing: -.02em; font-weight: 600; margin-bottom: 12px; }
+        .bottom-line p { color: var(--neutral-300); font-size: 17px; line-height: 1.6; }
+        @media (max-width: 991px) { .money-grid, .web { grid-template-columns: 1fr; } .mcard, .bottom-line { padding: 26px; } .mcard h3, .bottom-line h3 { font-size: 24px; } }
+
+
+        /* red string board (dark, one flat layer, one accent: the string) */
+        .rs { background: var(--neutral-950); padding: 120px 0; }
+        .rs .heading-title { color: var(--white); line-height: 1.1; }
+        .rs-intro { color: var(--neutral-400); font-size: 18px; line-height: 1.6; max-width: 760px; margin-top: 24px; margin-bottom: 32px; }
+        .rs-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 400px; grid-template-rows: minmax(0, 1fr); height: 800px; border-radius: 24px; overflow: hidden; background: #121214; }
+        .rs-stage { position: relative; display: flex; flex-direction: column; min-width: 0; }
+        #rs-svg { flex: 1; width: 100%; min-height: 0; cursor: grab; display: block; }
+        #rs-svg:active { cursor: grabbing; }
+        .rs-dots { fill: #2a2a30; }
+        .rs-zone rect { fill: #17171a; stroke: #26262b; stroke-width: 1; vector-effect: non-scaling-stroke; }
+        .rs-zone text { fill: #8a8a94; font-weight: 600; letter-spacing: .08em; font-family: Urbanist, sans-serif; text-transform: uppercase; }
+        .rs-links path { fill: none; stroke: var(--brand); stroke-opacity: .4; stroke-width: 1.2; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+        #rs-svg.has-sel .rs-links path { stroke-opacity: .05; }
+        #rs-svg.has-sel .rs-links path.on { stroke-opacity: 1; stroke-width: 2; filter: drop-shadow(0 0 3px var(--brand)); }
+        .rs-node { cursor: pointer; }
+        .rs-node rect, .rs-node circle, .rs-node path { fill: #26262b; stroke: #8a8a94; stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+        .rs-person circle { fill: #2e2e34; stroke: #b4b4bc; }
+        .rs-event path { fill: #17171a; stroke: #d4d4d8; }
+        .rs-node text { fill: #e4e4e7; paint-order: stroke; stroke: #121214; stroke-linejoin: round; font-weight: 500; font-family: Urbanist, sans-serif; pointer-events: none; }
+        .rs-node:hover rect, .rs-node:hover circle, .rs-node:hover path, .rs-node:focus rect, .rs-node:focus circle, .rs-node:focus path { stroke: var(--white); }
+        .rs-node:focus { outline: none; }
+        .rs-node text.hid, .rs-zone text.hid { opacity: 0; }
+        #rs-svg.has-sel .rs-node { opacity: .2; }
+        #rs-svg.has-sel .rs-node.on { opacity: 1; }
+        .rs-node.on rect, .rs-node.on circle, .rs-node.on path { stroke: #e4e4e7; }
+        .rs-node.sel rect, .rs-node.sel circle, .rs-node.sel path { fill: var(--brand); stroke: var(--white); stroke-width: 2; filter: drop-shadow(0 0 6px var(--brand)); }
+        .rs-node.sel text { fill: var(--white); font-weight: 700; }
+        .rs-bar { display: flex; gap: 12px; align-items: center; padding: 12px 16px 16px; }
+        .rs-key { display: flex; gap: 16px; align-items: center; height: 36px; padding: 0 14px; border-radius: 8px; background: #1a1a1d; box-shadow: inset 0 0 0 1px #26262b; color: #a1a1aa; font-size: 13px; }
+        .rs-key span { display: inline-flex; align-items: center; gap: 6px; }
+        .rs-key .rs-shape { margin-top: 0; }
+        .rs-zoom { display: flex; border-radius: 8px; background: #1a1a1d; box-shadow: inset 0 0 0 1px #26262b; overflow: hidden; }
+        .rs-zoom button { display: grid; place-items: center; padding: 0; width: 40px; height: 36px; border: 0; background: none; color: #d4d4d8; font-size: 18px; line-height: 1; cursor: pointer; font-family: inherit; }
+        .rs-zoom button + button { box-shadow: inset 1px 0 0 #26262b; }
+        .rs-zoom button:hover { background: #232328; color: var(--white); }
+        .rs-zoom button:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
+        .rs-side { display: flex; flex-direction: column; min-height: 0; background: #1a1a1d; box-shadow: inset 1px 0 0 #232328; }
+        .rs-find { position: relative; padding: 20px 24px 8px; }
+        .rs-find svg { position: absolute; left: 38px; top: 32px; width: 16px; height: 16px; fill: none; stroke: #8a8a94; stroke-width: 2; stroke-linecap: round; pointer-events: none; }
+        .rs-find input { width: 100%; height: 40px; border-radius: 8px; border: 0; box-shadow: inset 0 0 0 1px #2e2e33; background: #141416; color: var(--neutral-100);
+            padding: 0 14px 0 40px; font-size: 15px; font-family: inherit; }
+        .rs-find input::placeholder { color: #8a8a94; }
+        .rs-find input:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
+        .rs-panel { flex: 1; min-height: 0; overflow-y: auto; padding: 16px 24px 24px; scrollbar-width: thin; scrollbar-color: #3a3a42 transparent; }
+        .rs-back { background: none; border: 0; color: #a1a1aa; font-size: 14px; font-weight: 600; padding: 0; margin-bottom: 16px; cursor: pointer; font-family: inherit; }
+        .rs-back:hover { color: var(--white); }
+        .rs-type { display: inline-flex; align-items: center; gap: 8px; color: #a1a1aa; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+        .rs-type .rs-shape { margin-top: 0; }
+        .rs-head h4 { color: var(--white); font-size: 26px; line-height: 1.2; letter-spacing: -.02em; font-weight: 600; margin: 8px 0 4px; }
+        .rs-sub { color: #c4c4cc; font-size: 15px; line-height: 1.5; }
+        .rs-about { color: #a1a1aa; font-size: 15px; line-height: 1.6; margin-top: 12px; }
+        .rs-group { margin-top: 28px; }
+        .rs-group h5 { color: #a1a1aa; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+        .rs-group h5 span { color: #71717a; margin-left: 4px; }
+        .rs-list { border-radius: 8px; background: #141416; box-shadow: inset 0 0 0 1px #26262b; overflow: hidden; }
+        .rs-item { display: flex; gap: 12px; align-items: flex-start; width: 100%; text-align: left; background: none; border: 0; padding: 11px 14px; cursor: pointer; font-family: inherit; }
+        .rs-item + .rs-item { box-shadow: inset 0 1px 0 #232328; }
+        .rs-item:hover, .rs-item:focus-visible { background: #1f1f23; box-shadow: inset 2px 0 0 var(--brand); outline: none; }
+        .rs-item + .rs-item:hover, .rs-item + .rs-item:focus-visible { box-shadow: inset 2px 0 0 var(--brand), inset 0 1px 0 #232328; }
+        .rs-item-text { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+        .rs-item-line { color: #a1a1aa; font-size: 14px; line-height: 1.45; }
+        .rs-item b { color: var(--white); font-size: 15px; font-weight: 600; }
+        .rs-item:hover b, .rs-item:focus-visible b { color: var(--brand); }
+        .rs-item em { color: #71717a; font-size: 12px; font-style: normal; line-height: 1.4; }
+        .rs-shape { flex: 0 0 auto; width: 11px; height: 11px; margin-top: 5px; border: 1.5px solid #a1a1aa; }
+        .rs-shape-org { border-radius: 2px; }
+        .rs-shape-person { border-radius: 50%; }
+        .rs-shape-event { transform: rotate(45deg) scale(.85); }
+        .rs-note { color: #8a8a94; font-size: 14px; line-height: 1.5; margin-top: 16px; max-width: 760px; }
+        @media (max-width: 991px) {
+            .rs { padding: 80px 0; }
+            .rs-wrap { grid-template-columns: 1fr; grid-template-rows: auto; height: auto; }
+            .rs-stage { height: 540px; }
+            .rs-side { box-shadow: inset 0 1px 0 #232328; }
+            .rs-panel { max-height: 640px; }
+            .rs-key { gap: 10px; padding: 0 10px; font-size: 12px; }
+            .rs-bar { padding: 10px 12px 12px; }
+        }
+
+        /* sources */
+        .sources { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .source { border-radius: 20px; padding: 22px 24px; background: var(--neutral-50); }
+        .source .who { font-weight: 700; color: var(--primary); }
+        .source .what { color: var(--neutral-600); font-size: 15px; line-height: 1.5; margin-top: 6px; }
+        .source a { word-break: break-all; font-size: 14px; color: var(--reported); }
+        @media (max-width: 767px) { .sources { grid-template-columns: 1fr; } }
+
+        .heading-section .heading-title { font-size: clamp(40px, 6vw, 72px); line-height: 1.02; }
+        footer.pt-foot { padding: 40px 0 60px; color: var(--neutral-500); font-size: 14px; text-align: center; }
+        @media (max-width: 575px) { .container { padding-left: 16px; padding-right: 16px; } .hero-lede { font-size: 17px; } }
+    </style>
+</head>
+
+<body>
+    <div class="pt-header">
+        <div class="inner">
+            <span class="brand">Irkutsk Plague Timeline</span>
+            <nav>
+                <a href="#answer">Short answer</a>
+                <a href="#timeline">Timeline</a>
+                <a href="#leak">The leak</a>
+                <a href="#money">Follow the money</a>
+                <a href="#board">Red string</a>
+                <a href="#sources">Sources</a>
+            </nav>
+            <a href="#leak" class="tf-btn">The 40-dead claim</a>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="section-hero v1">
+        <div class="hero-image"></div>
+        <div class="container">
+            <div class="content-wrap text-center">
+                <div class="hero-kicker"><span class="dot"></span>Updated October 14, 2026 · Wednesday</div>
+                <h1 class="hero-title text-gradient-1">From a Siberian lab<br>to a leak about <span class="accent">40 dead</span></h1>
+                <p class="hero-lede">
+                    The Irkutsk "pneumonic plague" scare, step by step: a cross-border plague drill in August, one researcher's death,
+                    Russia's denials, China's border warnings, and the anonymous posts claiming a hospital cover-up in Inner Mongolia.
+                </p>
+                <div class="hero-meta">
+                    <span>May 20 → Oct 14, 2026</span>
+                    <span>48 events</span>
+                    <span>Chinese, Russian, US &amp; WHO sources</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Short answer -->
+    <div class="flat-spacing" id="answer">
+        <div class="container">
+            <div class="heading-section mb-48">
+                <div class="heading-sub fw-semibold">Short answer</div>
+                <div class="heading-title text-gradient-2">Where it stands today</div>
+            </div>
+            <div class="answer">
+                <div class="verdict">
+                    <h3>One confirmed death. No confirmed spread. A very loud rumor.</h3>
+                    <p>
+                        Russia still calls the death "pneumonia of unknown cause" and lifted every quarantine on October 8.
+                        The WHO says it has no evidence of ongoing spread but complains Russia hasn't handed over the full lab data.
+                        No official source in China reports a plague case. The claim of 40+ dead at an Inner Mongolia hospital comes from one
+                        anonymous post relayed by one X account on October 11, and nothing so far backs it up.
+                    </p>
+                </div>
+                <div class="facts">
+                    <div class="fact">
+                        <div class="num">1</div>
+                        <div class="lbl">Confirmed death: a 28-year-old lab worker at the Irkutsk anti-plague institute, Oct 2</div>
+                        <div class="tag official">Official</div>
+                    </div>
+                    <div class="fact">
+                        <div class="num">~200</div>
+                        <div class="lbl">Contacts put under medical watch (189 by one count), all released by Oct 8</div>
+                        <div class="tag official">Official</div>
+                    </div>
+                    <div class="fact">
+                        <div class="num">~5,000</div>
+                        <div class="lbl">Lab tests, no dangerous pathogen found. Contacts had 2 COVID and 2 rhinovirus cases.</div>
+                        <div class="tag official">Official · Russia</div>
+                    </div>
+                    <div class="fact">
+                        <div class="num red">40+</div>
+                        <div class="lbl">Dead at an Erenhot hospital, claimed by an anonymous "insider." Not confirmed by anyone.</div>
+                        <div class="tag rumor">Rumor</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="flat-spacing pt-0" id="timeline">
+        <div class="container">
+            <div class="heading-section mb-48">
+                <div class="heading-sub fw-semibold">Timeline</div>
+                <div class="heading-title text-gradient-2">From the very beginning</div>
+            </div>
+
+            <div class="legend">
+                <div class="item"><span class="tag official">Official</span> said by a government, health agency or the WHO</div>
+                <div class="item"><span class="tag reported">Reported</span> media reports, not confirmed officially</div>
+                <div class="item"><span class="tag rumor">Rumor</span> anonymous posts, social media, unverified claims</div>
+            </div>
+
+            <div class="phase-nav">
+                <a href="#p0">Before · May – Sep</a>
+                <a href="#p1">The death · Sep 25 – Oct 2</a>
+                <a href="#p2">The scare · Oct 2 – 6</a>
+                <a href="#p3">Denials · Oct 6 – 9</a>
+                <a href="#p4">China reacts · Oct 9 – 14</a>
+            </div>
+
+            <!-- Phase 0 -->
+            <div class="phase" id="p0">
+                <div class="phase-head">
+                    <div class="when">Phase 0 · May – September</div>
+                    <h2>Drills, summits and a very active plague season</h2>
+                    <p>Before anyone got sick: two China–Russia drills, two Xi–Putin meetings, and the Irkutsk institute growing live plague from an unusually active border hot spot.</p>
+                </div>
+                <div class="tl">
+                    <div class="ev official">
+                        <div class="date"><div class="d">May 20–21</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · China & Russia</span></div>
+                            <h4>Putin's state visit to China: biosafety in the joint statement</h4>
+                            <p>The joint statement praises a <strong>2026 China–Russia disaster-medicine tactical drill</strong> and promises more cooperation on biosafety, infectious-disease control and cross-border transmission.</p>
+                            <div class="src">PRC Ministry of Foreign Affairs, joint statement of May 21</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">June</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official</span></div>
+                            <h4>Russia–China infectious-threat exercise in Khabarovsk</h4>
+                            <p>Irkutsk institute scientists travel to Khabarovsk for joint Russian–Chinese exercises on responding to infectious threats. It's one of the last news items on the institute's own website.</p>
+                            <div class="src">Irkutsk institute website, via Lyudi Baikala Oct 12</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Jul 1 →</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · Mongolia</span></div>
+                            <h4>The Irkutsk institute grows live plague in western Mongolia</h4>
+                            <p>A joint team from the <strong>Irkutsk anti-plague institute</strong>, the Altai plague station and two Mongolian zoonotic centers surveys the Siilkhem plague hot spot in Bayan-Ölgii. They <strong>grow plague bacteria from samples</strong>, confirming the area is highly active. These joint surveys have run every year since 2017.</p>
+                            <div class="src">Mongolian National Broadcaster via Asia-Russia, Jul 28; Rossiyskaya Gazeta, Jul 27</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Jul 25</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span></div>
+                            <h4>Bubonic plague confirmed in Mongolia's Khovd province</h4>
+                            <p>A patient in Khovd, on the border with China, tests positive after eating marmot meat.</p>
+                            <div class="src">Health and Family; Global Risk Atlas; Fortis Vita</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Aug 14–31</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official</span></div>
+                            <h4>Second sampling round: plague grown again on the Russia–Mongolia border</h4>
+                            <p>Russian and Mongolian experts test 200+ samples in Mongolia's Sagaan-Uul district and isolate the plague bacteria again. A joint monitoring program for the area runs until 2029.</p>
+                            <div class="src">Zamin.uz, Sep 4; Rospotrebnadzor via RG, Sep 4</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Aug 24–27</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official</span></div>
+                            <h4>China–Russia cross-border epidemic drill in Fuyuan, Heilongjiang</h4>
+                            <p>Over 300 people and 19 medical emergency teams from China, plus Russian health agencies, ran three scenarios.
+                                One of them was <strong>"plague imported from abroad, with a joint cross-border response."</strong> The other two were
+                                a new tick-borne disease and disease control after floods.</p>
+                            <p>Sergey Balakhonov, director of the Irkutsk anti-plague institute (where the death later happened), attended and gave a speech.</p>
+                            <span class="zh">2026年中俄跨境传染病疫情联合应急演练 · 抚远市</span>
+                            <div class="src">The Paper, Health News (健康报), via Vision Times (看中国) Oct 7–8</div>
+                        </div>
+                    </div>
+                    <div class="ev rumor">
+                        <div class="date"><div class="d">Aug 25 →</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag rumor">Speculation</span></div>
+                            <h4>Fuyuan's party secretary drops out of public view</h4>
+                            <p>He Dahai, Fuyuan's party secretary, gave a speech at the drill and chaired a meeting on Aug 24. After Aug 25 his name stops appearing
+                                in local reports; the mayor chairs his meetings. Chinese social media links this to the plague story. There is no evidence of a link.</p>
+                            <div class="src">Vision Times (看中国), Oct 8</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Aug 31</div><div class="y">2026 · Mon</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official</span></div>
+                            <h4>Xi and Putin meet at the SCO summit in Bishkek</h4>
+                            <p>Their second meeting of the year, during the Shanghai Cooperation Organisation summit (Aug 30 – Sep 3). The Eastern Economic Forum in Vladivostok follows (Sep 1–4), attended by Chinese Vice Premier Ding Xuexiang.</p>
+                            <div class="src">Xinhua, Aug 31 – Sep 5</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Sep 3–5</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · Russia</span></div>
+                            <h4>Russia announces "high epizootic activity" on the Mongolian border</h4>
+                            <p>Rospotrebnadzor says the 29,000 km² Saylyugem plague area on the Russia–Mongolia border is highly active this year and that it is <strong>vaccinating people in the border areas</strong>.</p>
+                            <div class="src">RIA Novosti, Rossiyskaya Gazeta, Gazeta.ru, Sep 3–5</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Sep 4–8</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span></div>
+                            <h4>Emergency and cattle cull outside Irkutsk</h4>
+                            <p>An emergency is declared in the Oyok district and the villages of Butyrki and Koty are quarantined. Officials kill 19 animals, citing lumpy skin disease, which normally doesn't require killing. A veterinarian says the symptoms look like foot-and-mouth disease; Buryatia sets up 24-hour vet posts on the border. Not linked to plague, but it shows how the region handles outbreaks.</p>
+                            <div class="src">Meduza / Lyudi Baikala, Sep 8</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Sep 20–25</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official</span></div>
+                            <h4>Deadlines for the institute's plague conference</h4>
+                            <p>Talk applications close Sep 20 and abstracts Sep 25 (the date of the alleged tube break) for the CIS plague conference the institute is hosting in Irkutsk on Oct 21–22. Just a coincidence of dates, noted here.</p>
+                            <div class="src">conf2026-irkutsk.ru</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Sep 30</div><div class="y">2026 · Wed</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · China</span></div>
+                            <h4>Hohhot warns of more rats than usual and a plague risk</h4>
+                            <p>Hohhot's disease control center says rat numbers are higher than the same time in past years and the plague risk "can't be ignored." This is before the Irkutsk death is public.</p>
+                            <div class="src">Hohhot CDC via Sina, Sep 30</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 1 -->
+            <div class="phase" id="p1">
+                <div class="phase-head">
+                    <div class="when">Phase 1 · Sep 25 – Oct 2</div>
+                    <h2>One researcher gets sick and dies</h2>
+                    <p>How she got sick is still disputed. Three stories circulate, and Russia's health agency rejects the lab-accident one.</p>
+                </div>
+                <div class="tl">
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Sep 25</div><div class="y">2026 · Fri</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span><span class="tag rumor">Denied</span></div>
+                            <h4>Story 1: she broke a test tube of plague bacteria</h4>
+                            <p>Russian media later reported that a female worker at the institute in Shelekhov, Irkutsk region, broke a tube containing plague bacteria
+                                while handling diagnostic samples.</p>
+                            <p>Rospotrebnadzor (Russia's health watchdog) says no accident happened. Her mother, Svetlana Shipilova, a medical worker herself, told
+                                Russian outlet Glubina that these tubes "can't be broken even if you throw them at a wall," but that she "knows the truth"
+                                and that the authorities "watched my daughter die." She hasn't said what the truth is.</p>
+                            <div class="src">Russian media via Vision Times Oct 8; mother quoted by The Telegraph via Vision Times Oct 9</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Late Sep</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span></div>
+                            <h4>Stories 2 and 3: a trip to Buryatia, or back from Thailand</h4>
+                            <p>Other reports say she had been on a work trip to Buryatia, near the Mongolian border, where natural plague hot spots had been found.
+                                Buryatia's head, Alexey Tsydenov, denied she had been there. A third version says she came in with pneumonic plague after returning from Thailand.</p>
+                            <div class="src">Vision Times (看中国), Oct 7; Meduza, Oct 4</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">~Sep 29</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official</span></div>
+                            <h4>Hospitalized in Shelekhov with severe pneumonia</h4>
+                            <p>The 28-year-old researcher, named in reports as <strong>Darya Shipilova</strong>, is admitted to the Shelekhov district hospital with
+                                a severe respiratory infection. A coworker says cold symptoms started at work, with no fever, then she got worse and developed swelling.
+                                Shelekhov's hospital used to be the COVID hospital, which may be why she was taken there.</p>
+                            <p>She had worked at the institute since 2022, rising from lab assistant to researcher, and was in the plague microbiology department until at least January 2025.</p>
+                            <span class="zh">舍列霍夫区医院 · 西伯利亚与远东防鼠疫研究所</span>
+                            <div class="src">Baidu Baike; The Paper (澎湃) Oct 11; Lyudi Baikala via Meduza, Oct 6</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Late Sep</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span></div>
+                            <h4>People in hazmat suits seen on Shelekhov's streets</h4>
+                            <p>Residents tell Lyudi Baikala they saw people in protective suits, masks and gloves in the town the week before her death.</p>
+                            <div class="src">Lyudi Baikala via Meduza, Oct 4</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Oct 1 →</div><div class="y">2026 · Thu</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span></div>
+                            <h4>FSB escorts for the ambulances, while she is still alive</h4>
+                            <p>From Oct 1, according to Lyudi Baikala's sources, ambulances taking her contacts for tests were escorted by FSB (security service) crews.</p>
+                            <div class="src">Lyudi Baikala via Meduza, Oct 4–6</div>
+                        </div>
+                    </div>
+                    <div class="ev official key">
+                        <div class="date"><div class="d">Oct 2</div><div class="y">2026 · Fri</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official</span></div>
+                            <h4>She dies overnight, Oct 1–2</h4>
+                            <p>The same day, the first media reports call it "suspected pneumonic plague." The WHO later says Russia held a meeting that day about a
+                                local resident suspected of having a dangerous infectious disease.</p>
+                            <div class="src">The Paper Oct 11; WHO Director-General Tedros on X, Oct 8</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 2 -->
+            <div class="phase" id="p2">
+                <div class="phase-head">
+                    <div class="when">Phase 2 · Oct 2 – 6</div>
+                    <h2>Quarantine, and the world notices</h2>
+                    <p>Russia's actions looked like a plague response, even while its words said otherwise. That gap is what made the story explode.</p>
+                </div>
+                <div class="tl">
+                    <div class="ev official">
+                        <div class="date"><div class="d">Oct 2</div><div class="y">2026 · Fri</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official</span></div>
+                            <h4>About 200 contacts quarantined</h4>
+                            <ul>
+                                <li>About 200 possible contacts go under medical watch. Most are hospitalized in two hospitals, and 12 are kept at the plague institute.</li>
+                                <li>Shelekhov district hospital is sealed off; public events are postponed.</li>
+                                <li>The nearby Irkutsk aluminium smelter orders staff to wear masks.</li>
+                                <li>Russia's chief sanitary doctor flies in from Moscow; the governor calls an emergency meeting; police are involved.</li>
+                            </ul>
+                            <div class="src">The Paper Oct 11; Sina Finance</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Oct 2</div><div class="y">2026 · Fri</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span><span class="tag rumor">Deleted</span></div>
+                            <h4>Plague posts appear, then disappear</h4>
+                            <ul><li>Pro-government <strong>Izvestia</strong> reports a <strong>criminal case</strong> under Article 236 part 2 (sanitary-rule violation causing death by negligence), then deletes it. REN TV, in the same media holding, deletes 5 posts about plague and ~200 hospitalized.</li><li>Telegram channels Mash and Baza say it was pneumonic plague; RIA says "an infectious disease, nature being established."</li><li>Irkutsk journalist Pavel Stepanov writes that she broke a tube of pneumonic plague and hid it. Unconfirmed.</li><li>Buryatia's head writes "the woman who died of plague," then edits it to "who <em>possibly</em> died of plague."</li><li>Russia's chief sanitary doctor Anna Popova flies in; the governor cites "suspicion of an especially dangerous infection."</li><li>That night, workers in gas masks and orange suits disinfect her apartment building, telling neighbors "a girl died, a deadly virus." They return twice more, later saying it's "for cockroaches."</li></ul>
+                            <div class="src">Lyudi Baikala via Meduza, Oct 4–6; Zona Media, Oct 2; TGStat archive</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Oct 3</div><div class="y">2026 · Sat</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span></div>
+                            <h4>Antibiotics bought out, fights in pharmacies, more deletions</h4>
+                            <ul><li>People in Irkutsk and Shelekhov buy every antibiotic in stock; an institute worker says there were <strong>fights in some pharmacies</strong>.</li><li>Baikalsk city hall tells residents not to travel to Shelekhov because of plague, then deletes the post two hours later.</li><li>The aluminium plant's director orders masks because of "contradictory information about plague," then says the next day it's seasonal colds.</li><li>The regional hospital stops all visitors; Irkutsk cancels its city-wide cleanup day. The governor posts about forums and a fish festival, not the death.</li></ul>
+                            <div class="src">Lyudi Baikala, Oct 3–6</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Oct 4</div><div class="y">2026 · Sun</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span><span class="tag official">Official</span></div>
+                            <h4>Irkutsk hospitals quietly quarantined; Russia's first comment</h4>
+                            <p>Lyudi Baikala reports a 3-week quarantine at Irkutsk hospitals No. 1, 3 and 10, the children's hospital and a maternity ward; a source says doctors "openly talk about plague." The institute held about 200 staff inside for three days, swabbing them twice a day. Rospotrebnadzor gives its first comment, to TASS: "pneumonia of unknown cause."</p>
+                            <div class="src">Lyudi Baikala via Meduza, Oct 4; TASS</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Oct 5</div><div class="y">2026 · Mon</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span></div>
+                            <h4>A "Plague" checklist for pregnant patients</h4>
+                            <p>At the Irkutsk perinatal center, a patient is handed a form titled "Checklist for suspected especially dangerous infection: Plague." An institute worker says every hospital is swabbing every cold patient for plague and "scientists are working around the clock." The governor says the situation is "fully under control"; Peskov tells people to trust only Rospotrebnadzor.</p>
+                            <div class="src">Lyudi Baikala, Oct 5–7</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Oct 2–6</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span></div>
+                            <h4>Neighboring Buryatia's leader says she died of "a form of plague"</h4>
+                            <p>Alexey Tsydenov, head of the Republic of Buryatia, reportedly posted that the worker died of a type of plague (type not given).
+                                189 people are listed under medical monitoring.</p>
+                            <div class="src">Russian local media via Sina Finance and Vision Times, Oct 7</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Oct 5</div><div class="y">2026 · Mon</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · US</span></div>
+                            <h4>Trump: hasn't discussed it with Russia</h4>
+                            <p>Asked about it, President Trump says he hasn't talked to Russia about the plague and calls it "a very nasty disease."</p>
+                            <div class="src">Vision Times, Oct 8</div>
+                        </div>
+                    </div>
+                    <div class="ev rumor">
+                        <div class="date"><div class="d">~Oct 6</div><div class="y">2026</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag rumor">Blog claim</span></div>
+                            <h4>"Moscow airports take temperatures of Irkutsk passengers"</h4>
+                            <p>A Chinese military blog says Moscow is screening all passengers arriving from Irkutsk and asks whether this was "another bioweapon leak."</p>
+                            <div class="src">鹰眼Defence (blog), via Baidu</div>
+                        </div>
+                    </div>
+                    <div class="ev rumor">
+                        <div class="date"><div class="d">Oct 6</div><div class="y">2026 · Tue</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag rumor">Rumor</span></div>
+                            <h4>X goes wild: "2,000 quarantined," "St. Petersburg lockdown"</h4>
+                            <p>Viral posts claim the leak is "100 times deadlier than COVID," that 2,000+ are in quarantine and that St. Petersburg will lock down "tomorrow."
+                                None of this happened.</p>
+                            <div class="src">X posts quoted by Vision Times, Oct 7</div>
+                        </div>
+                    </div>
+                    <div class="ev official key">
+                        <div class="date"><div class="d">Oct 6</div><div class="y">2026 · Tue</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · Russia</span></div>
+                            <h4>Russia: "pneumonia of unknown cause," no lab accident</h4>
+                            <p>Rospotrebnadzor posts that the worker's diagnosis is <strong>pneumonia of unknown cause</strong> (不明原因肺炎). Expanded lab tests found no microbe linked to her work,
+                                the institute's biosafety committee says no accident happened, and respiratory infections in the region are at normal levels.
+                                Russia tells the WHO there are no recent plague cases in the area.</p>
+                            <div class="src">Rospotrebnadzor notice, via Xinhua and The Paper</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Oct 6</div><div class="y">2026 · Tue</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · WHO &amp; US</span></div>
+                            <h4>WHO says it is watching. Rubio says Russia "clearly has a responsibility" to explain</h4>
+                            <ul>
+                                <li>Shelekhov's deputy mayor answers Trump's offer of help: "We'll handle it ourselves. The situation is fully under control."</li>
+                                <li>The WHO announces it is closely following the death.</li>
+                                <li>Secretary of State Rubio says the US is following it "hour by hour."</li>
+                                <li>Former arms-control envoy Marshall Billingslea points out the institute's historical ties to the Soviet bioweapons system.</li>
+                                <li>Former CDC director Robert Redfield says on NewsNation that if the bacteria had been engineered to resist antibiotics, it would explain why treatment failed. There is no public evidence of that.</li>
+                            </ul>
+                            <div class="src">Xinmin Weekly; Vision Times Oct 8–9; China News Service</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3 -->
+            <div class="phase" id="p3">
+                <div class="phase-head">
+                    <div class="when">Phase 3 · Oct 7 – 9</div>
+                    <h2>Russia stands down; the WHO pushes back</h2>
+                    <p>Russia declares it over within a week. The WHO says it still can't judge the risk without the lab data.</p>
+                </div>
+                <div class="tl">
+                    <div class="ev official">
+                        <div class="date"><div class="d">Oct 7</div><div class="y">2026 · Wed</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · Russia</span></div>
+                            <h4>Over 90% of contacts cleared, ~5,000 tests negative; Irkutsk starts lifting measures</h4>
+                            <p>Russia says no dangerous pathogen was found in nearly 5,000 tests, reports the case to the WHO under the International Health Regulations,
+                                and says the city of Irkutsk is lifting its precautions.</p>
+                            <div class="src">Rospotrebnadzor via Xinhua / CCTV; Changjiang Cloud; Guancha</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Oct 7</div><div class="y">2026 · Wed</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · WHO</span></div>
+                            <h4>Tedros: can't assess the risk yet</h4>
+                            <p>The WHO chief says the WHO has offered Russia technical help on plague and lab safety, but without the full picture it can't do a risk assessment.
+                                It asks for the lab results, the reasons for the quarantine, and the contacts' health status.</p>
+                            <div class="src">The Paper, Oct 11</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Oct 7</div><div class="y">2026 · Wed</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · US &amp; Kremlin</span></div>
+                            <h4>CDC readies screening at JFK; Trump: "we think not"; Kremlin blames the media</h4>
+                            <ul>
+                                <li>CDC director Erica Schwartz: the case is unconfirmed and the risk to the US is very low, but the CDC is ready to screen travelers.
+                                    About 200 flights a year come from Siberia, mostly into JFK.</li>
+                                <li>Asked if the scientist died from a bioweapon, Trump says "we think not," adding "we'll find out soon."</li>
+                                <li>Kremlin spokesman Dmitry Peskov says Russia informed the WHO and followed the rules, and accuses the media of spreading false information.</li>
+                                <li>US officials say the administration is preparing a formal diplomatic note asking Russia for details.</li>
+                            </ul>
+                            <div class="src">Vision Times Oct 8–9; Sina Finance; China.com (中华网)</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Oct 7</div><div class="y">2026 · Wed</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · US</span></div>
+                            <h4>US Embassy notice: "suspected pneumonic plague"</h4>
+                            <p>The embassy says it's aware of press reports of suspected pneumonic plague, quarantine measures and <strong>hospital closures in Irkutsk</strong>, and warns it can do little for US citizens outside Moscow. It is a notice, <strong>not an evacuation order</strong>. The WHO rates the risk moderate-to-low for Irkutsk, low for Russia.</p>
+                            <div class="src">US Embassy Moscow via Lyudi Baikala, Oct 7</div>
+                        </div>
+                    </div>
+                    <div class="ev official key">
+                        <div class="date"><div class="d">Oct 8</div><div class="y">2026 · Thu</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · Russia</span></div>
+                            <h4>All quarantine lifted; Russia denies a second case</h4>
+                            <p>Irkutsk governor Igor Kobzev announces in a video that all contacts have finished medical watch and every measure is lifted in Irkutsk and Shelekhov.
+                                Rospotrebnadzor denies media reports of a second sick person and says there have been no recent plague cases in the area.</p>
+                            <div class="src">Xinhua Oct 9; Lu Zhong Morning Post; The Paper</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Oct 8</div><div class="y">2026 · Thu</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · WHO</span></div>
+                            <h4>WHO asks again, including about the "second worker"</h4>
+                            <p>Tedros posts on X that Russia's information is still incomplete. The WHO asks for test results for the dead worker and contacts, and asks Russia to verify
+                                the report of a second lab worker with unexplained pneumonia.</p>
+                            <div class="src">Tedros on X, via Vision Times Oct 9</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Oct 8</div><div class="y">2026 · Thu</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span></div>
+                            <h4>Plague contracts surface; China's markets reopen into a plague-stock rally</h4>
+                            <p>Siberian Express finds a 2.6M ₽ contract for the Irkutsk institute to buy <strong>two patient isolation boxes for Mongolia</strong>, and Saratov's Mikrob institute taking bids for <strong>500 protective suits for Uzbekistan's plague center</strong>. Chinese markets reopen after the holiday and "plague concept" stocks jump. <a href="#money" style="color: var(--brand); font-weight: 600;">Follow the money ↓</a></p>
+                            <div class="src">Lyudi Baikala, Oct 8; Sina Finance, Oct 8</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Oct 8</div><div class="y">2026 · Thu</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span></div>
+                            <h4>Chinese state media mostly quiet; Chinese netizens panic</h4>
+                            <p>Overseas Chinese outlets note that Chinese state media barely covered the story while comment sections filled with fear and guesses.</p>
+                            <div class="src">Vision Times, Oct 8</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Oct 9</div><div class="y">2026 · Fri</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span></div>
+                            <h4>A new book about a Siberian lab plague; Russia says the investigation is closed</h4>
+                            <p>Vision Times points to a recently published novel featuring a Siberian lab, plague bacteria and a bio-accident, and reports Russian authorities have ended their investigation.</p>
+                            <div class="src">Vision Times, Oct 9</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 4 -->
+            <div class="phase" id="p4">
+                <div class="phase-head">
+                    <div class="when">Phase 4 · Oct 9 – 14</div>
+                    <h2>China reacts, and the leak appears</h2>
+                    <p>Border cities post warnings, Chinese in Russia head home, and anonymous "insiders" claim a cover-up. Officials say there is no plague in China.</p>
+                </div>
+                <div class="tl">
+                    <div class="ev official">
+                        <div class="date"><div class="d">Oct 9</div><div class="y">2026 · Fri</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · China</span></div>
+                            <h4>Xinhua: Russia denies new cases, measures lifted</h4>
+                            <p>China's state news agency runs Russia's line: no second case, situation stable, precautions lifted.</p>
+                            <div class="src">Xinhua, Oct 9</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Oct 10</div><div class="y">2026 · Sat</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span></div>
+                            <h4>Chinese living in Russia rush home; masks sell out; borders tighten</h4>
+                            <ul>
+                                <li>Reports of many Chinese in Russia packing up and returning; messages about stockpiling food and medicine and city lockdowns spread on Chinese social media.</li>
+                                <li>The Paper's correspondent in Irkutsk: Chinese residents "bought out" the masks, but no masks were seen in public places.</li>
+                                <li>Mongolia orders health monitoring on its Russian border; Kazakhstan, Uzbekistan and Kyrgyzstan tighten border health checks.</li>
+                            </ul>
+                            <div class="src">Vision Times Oct 10; The Paper; TMTPost (钛媒体)</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Oct 10</div><div class="y">2026 · Sat</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · China</span></div>
+                            <h4>Hulunbuir (Inner Mongolia) posts a plague risk notice</h4>
+                            <p>The Hulunbuir disease control center, on the Russian border, says plague here is unlikely but asks people arriving from plague areas of Russia's Far East
+                                to watch their health and tell doctors their travel history. Manzhouli posts a similar notice.</p>
+                            <span class="zh">呼伦贝尔市疾控中心 · 鼠疫防控风险提示</span>
+                            <div class="src">Hulunbuir Media Center; China.com; Huashang Daily</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Oct 11</div><div class="y">2026 · Sun</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · WHO</span></div>
+                            <h4>WHO: no evidence of sustained spread; public risk low</h4>
+                            <p>The WHO's update says there is no evidence of ongoing transmission and rates the public health risk as low. Taiwan's CDC steps up fever screening at airports and ports.</p>
+                            <div class="src">Xinhua via Jiemian, Oct 11; The Paper; Vision Times Oct 11</div>
+                        </div>
+                    </div>
+                    <div class="ev rumor key">
+                        <div class="date"><div class="d">Oct 11</div><div class="y">2026 · Sun</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag rumor">Rumor · unverified</span></div>
+                            <h4>The leak: "P4 lab worker" and "hospital insider" posts</h4>
+                            <p>An X account named "罗翔" (@LUOXIANGF) posts two anonymous submissions:</p>
+                            <ul>
+                                <li><strong>P4 lab:</strong> two plague patients caught at the Russian border were treated, released, and died five days after flying home to Shanghai and Chongqing.</li>
+                                <li><strong>Erenhot hospital:</strong> 70+ plague patients, <strong>40+ dead</strong>, bodies cremated before families were told, 3 doctors dead, and "thousands of cases" in Hohhot, Chifeng, Tongliao and Baotou.</li>
+                            </ul>
+                            <p><a href="#leak" style="color: var(--brand); font-weight: 600;">Full breakdown below ↓</a></p>
+                            <div class="src">@LUOXIANGF on X, Oct 11, via Vision Times Oct 12 &amp; 14</div>
+                        </div>
+                    </div>
+                    <div class="ev official">
+                        <div class="date"><div class="d">Oct 12</div><div class="y">2026 · Mon</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · China</span></div>
+                            <h4>More provinces post plague notices</h4>
+                            <p>Hunan and Guangdong disease control post plague risk notices; Henan publishes an explainer; Suifenhe (Heilongjiang) runs awareness talks and leaflets.</p>
+                            <div class="src">Vision Times Oct 12 &amp; 14</div>
+                        </div>
+                    </div>
+                    <div class="ev rumor">
+                        <div class="date"><div class="d">Oct 12</div><div class="y">2026 · Mon</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag rumor">Rumor</span></div>
+                            <h4>Vision Times: "Plague suspected in several Inner Mongolia cities, news blocked"</h4>
+                            <p>Secretchina.com runs the Erenhot hospital claim as a news story under its "Mainland politics" section.</p>
+                            <div class="src">Vision Times (看中国), Oct 12</div>
+                        </div>
+                    </div>
+                    <div class="ev official key">
+                        <div class="date"><div class="d">Oct 13</div><div class="y">2026 · Tue</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag official">Official · China</span></div>
+                            <h4>Hulunbuir: "no plague here," notice deleted</h4>
+                            <p>Asked by Jiefang Daily / Shanghai Observer, the Hulunbuir health commission says there is no plague in the area, the notice was routine health education,
+                                and it has been deleted to avoid misunderstanding. Hulunbuir has had no human plague case since 1927.</p>
+                            <div class="src">Jiupai News; Yangcheng Evening News (金羊网); China.com</div>
+                        </div>
+                    </div>
+                    <div class="ev reported">
+                        <div class="date"><div class="d">Oct 13</div><div class="y">2026 · Tue</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag reported">Reported</span></div>
+                            <h4>North China Pharma's rally ends in a limit-down</h4>
+                            <p>After three straight limit-ups (+33%), North China Pharmaceutical falls the daily maximum −9.95% on ¥1.3B of trading. It had warned the night before of "market speculation risk."</p>
+                            <div class="src">Economic Information Daily (Xinhua), Oct 13</div>
+                        </div>
+                    </div>
+                    <div class="ev rumor">
+                        <div class="date"><div class="d">Oct 14</div><div class="y">2026 · Wed</div></div>
+                        <div class="card">
+                            <div class="top"><span class="tag rumor">Rumor</span></div>
+                            <h4>Vision Times publishes the P4 leak; prophecy videos spread</h4>
+                            <p>Secretchina.com runs "Rumored plague deaths in Shanghai and Chongqing — leaker: we are panicking," and a prophecy video claiming "350 million will fall like leaves"
+                                and a US embassy evacuation alert. I haven't seen that alert in any other source.</p>
+                            <div class="src">Vision Times (看中国), Oct 14</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The leak -->
+    <div class="section-statistic" id="leak">
+        <div class="container">
+            <div class="heading-section">
+                <div class="heading-sub fw-semibold style-1">The leak</div>
+                <div class="heading-title text-white">The "40 dead" cover-up claim</div>
+            </div>
+            <p style="color: var(--neutral-400); font-size: 19px; line-height: 1.6; max-width: 820px;">
+                Both claims come from anonymous submissions posted by one X account on October 11 and repeated by Vision Times (secretchina.com).
+                Nobody named, no documents, no photos of patients.
+            </p>
+
+            <div class="leak-grid">
+                <div class="leak-card">
+                    <span class="tag rumor">Claim 1 · "P4 lab worker"</span>
+                    <h4>Two deaths in Shanghai and Chongqing</h4>
+                    <ul>
+                        <li>Two plague patients were caught at entry from Russia, treated in isolation, judged stable and released.</li>
+                        <li>On day 5 after flying home, both "suddenly fell ill and died."</li>
+                        <li>"We asked Russia for more raw data and were refused."</li>
+                        <li>Says the strain "must have upgraded," has a longer incubation, "no ultimate cure," and predicts deaths as a "percentage of the population" in big cities.</li>
+                        <li>Says it "can't be natural": a military lab project that "got out of hand."</li>
+                    </ul>
+                    <blockquote>"We're panicking, it feels absurd… Shanghai and Chongqing make me scared. It can't be stopped."
+                        <span class="zh">"我们很慌，感觉很离谱……上海和重庆的例子，让我感到恐怖，无法阻挡"</span></blockquote>
+                </div>
+                <div class="leak-card">
+                    <span class="tag rumor">Claim 2 · "hospital insider"</span>
+                    <h4>Erenhot hospital: 70+ patients, 40+ dead</h4>
+                    <ul>
+                        <li>Named as the affiliated hospital of an "Erenhot Medical College," Inner Mongolia. A real match exists: Erenhot's only general hospital is the
+                            Inner Mongolia Medical University Affiliated Hospital, Erenhot Branch (内蒙古医科大学附属医院二连浩特分院).</li>
+                        <li>70+ plague patients admitted, <strong style="color: var(--white);">40+ dead</strong>, many arriving too late.</li>
+                        <li>Some bodies cremated before families were told.</li>
+                        <li>10+ doctors infected early on, 3 died.</li>
+                        <li>Outwardly, the hospital says it never treated a plague patient.</li>
+                        <li>"Thousands of cases" in Hohhot, Chifeng, Tongliao and Baotou, with the news fully blocked.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="checks">
+                <div class="check">
+                    <div class="k">What fits</div>
+                    <p>Border cities really did post plague warnings, Chinese in Russia really did rush home, and the WHO really is unhappy with Russia's openness.
+                        China also hid early COVID news, so official denials alone don't prove a claim false.</p>
+                </div>
+                <div class="check">
+                    <div class="k">What doesn't fit</div>
+                    <p>Plague is a bacterium cured by standard antibiotics if treated early. The post talks about a "virus strain," antibodies from "mandatory shots" and "no cure,"
+                        which sounds like COVID language moved onto plague. Patients "treated and stable" dying days later is not how treated plague behaves.</p>
+                </div>
+                <div class="check">
+                    <div class="k">Not found</div>
+                    <p>No mainland outlet, health office, the WHO or any other country reports cases in Shanghai, Chongqing or Inner Mongolia.
+                        I haven't been able to find out who runs the X account.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Follow the money -->
+    <div class="flat-spacing" id="money">
+        <div class="container">
+            <div class="heading-section mb-48">
+                <div class="heading-sub fw-semibold">Follow the money</div>
+                <div class="heading-title text-gradient-2">Who gains, who met, who's connected</div>
+            </div>
+
+            <p style="color: var(--neutral-600); font-size: 18px; line-height: 1.6; max-width: 860px; margin-bottom: 32px;">
+                In China and Russia the money in a plague scare doesn't mainly move through stock trading. It moves through state budgets, government contracts,
+                licenses, stockpiles and partnerships. So this section follows the organizations that gain the most from plague being taken seriously,
+                the people who run them, and who they've been dealing with.</p>
+
+            <div class="money-grid">
+                <div class="mcard wide">
+                    <div class="k">Who benefits most</div>
+                    <h3>The organizations and the people running them</h3>
+                    <div class="tbl-wrap">
+                        <table class="stk">
+                            <thead><tr><th>Organization</th><th>Who runs / owns it</th><th>How a plague scare pays</th><th>What they were doing</th></tr></thead>
+                            <tbody>
+                                <tr class="flag"><td><b>Rospotrebnadzor</b><br>Russia's health watchdog</td><td>Anna Popova, head since 2014 and Russia's chief sanitary doctor</td><td>Runs all five plague institutes and the <b>"Sanitary Shield"</b> program: ₽12B total, ₽2.2B in 2026, plus ₽409M for new high-containment labs. A report to the government was due Sep 1, 2026.</td><td>Announced the "high activity" border hot spot Sep 3–5; Popova flew to Irkutsk Oct 2; it's the only official voice on the cause of death</td></tr>
+                                <tr class="flag"><td><b>Irkutsk anti-plague institute</b></td><td>Sergey Balakhonov, director since 2008</td><td>Contracts (₽2.6M isolation boxes for Mongolia), international programs, the ₽13.15M conference, and more funding when plague is in the news</td><td>Grew live plague in Mongolia (Jul–Aug), joined the June Khabarovsk drill, spoke at the Aug Fuyuan drill, hosts the Oct 21–22 CIS conference</td></tr>
+                                <tr><td><b>Mikrob institute</b> (Saratov)</td><td>Rospotrebnadzor's lead plague institute</td><td>Supplies Central Asia: tender for 500 suits for Uzbekistan's plague center</td><td>Running training courses for 2026; tender published around Oct 8</td></tr>
+                                <tr><td><b>Lamsystems</b> (Miass)</td><td>Russian private maker of "Pasteris" anti-plague suits and biosafety cabinets</td><td>Every suit and lab cabinet order in a plague scare; sold by many resellers at ~₽16–18k per suit</td><td>Owners not yet checked</td></tr>
+                                <tr class="flag"><td><b>Kehua Bio / Tianlong</b><br>科华生物 / 天隆</td><td><b>Peng Niancai</b> (彭年才), Tianlong's founder and a Xi'an Jiaotong professor, actual controller of Kehua since March 2024</td><td>Makes <b>four plague PCR test kits</b> "supporting customs and CDCs"; works with China's national CDC</td><td>Says plague kits are a tiny share of sales today. Tianlong has <b>long-term partners in Russia</b> (Medlab Dubai 2025)</td></tr>
+                                <tr class="flag"><td><b>CanSino Biologics</b><br>康希诺</td><td>Co-develops vaccines with the <b>PLA Academy of Military Medical Sciences</b> (Chen Wei's team)</td><td>Vaccine maker with military ties; Hong Kong shares +13% on Oct 6 while mainland markets were closed</td><td>Its Russian partner <b>Petrovax</b> got approval for a CanSino-based meningitis vaccine on <b>Sep 28</b>, made at a ₽3B+ plant near Moscow</td></tr>
+                                <tr><td><b>Petrovax Pharm</b> (Russia)</td><td>Owners not yet confirmed</td><td>Local producer for CanSino; revenue ₽15.7B in 2024</td><td>Mentetra registered Sep 28; showcased new biotech drugs at BIOPROM-26 on Oct 7</td></tr>
+                                <tr><td><b>Zhonghong Medical</b><br>中红医疗</td><td>State-owned: Xiamen state assets commission (37.9%); chairman Sang Shujun (桑树军), GM Yang Hao</td><td>Medical gloves and protective gear</td><td>Stock +13.4% on Sep 30 with heavy big-fund buying, before any news; the company says it can't explain it</td></tr>
+                                <tr><td><b>North China Pharmaceutical</b><br>华北制药</td><td>State-controlled (Hebei)</td><td>Old-line antibiotic maker; over half its sales are anti-infectives</td><td>13 drugs added to the national essential-drug list and 8 in the 12th round of bulk buying</td></tr>
+                                <tr><td><b>Beijing Bangwei Emergency</b><br>北京邦维应急</td><td>Private emergency-equipment supplier</td><td>Won Yunnan's tender for 2026 plague rapid-response team equipment</td><td>Award announced Aug 6</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mcard">
+                    <div class="k">China · government contracts</div>
+                    <h3>Plague purchases in the months before</h3>
+                    <ul>
+                        <li><b>Inner Mongolia CDC</b>: a ¥4.5M tender for plague and brucellosis supplies (Jul 21). The plague package was only ¥122k, and it <b>failed twice</b> (Aug 12, Sep 10) for lack of bidders, along with the protective-gear package. After two failures it can go to a single-source deal.</li>
+                        <li><b>Yunnan</b>: equipment for its "2026 plague rapid-response team" (won by Beijing Bangwei Emergency, Aug 6).</li>
+                        <li><b>Shaanxi CDC</b>: ¥300k of "emergency testing equipment" for its plague lab (bids due Sep 10).</li>
+                        <li><b>Qinghai</b>: a ¥464k plague PCR monitoring lab in Menyuan (Aug 29); <b>Sichuan</b>: a plague-control upgrade in Yajiang (Sep 23).</li>
+                    </ul>
+                    <p>Small, routine amounts. Nothing here looks like a buildup for a big outbreak.</p>
+                </div>
+
+                <div class="mcard">
+                    <div class="k">Russia · government money</div>
+                    <h3>Sanitary Shield and the plague institutes</h3>
+                    <ul>
+                        <li><b>₽12B</b> federal "Sanitary Shield" program, created after COVID to build "barriers" against epidemics at home and abroad.</li>
+                        <li><b>₽2.2B</b> for 2026, plus <b>₽409M</b> for a new high-containment lab in Voronezh and a complex in Simferopol.</li>
+                        <li><b>₽2.6M</b> isolation boxes for Mongolia; <b>500 suits</b> for Uzbekistan; <b>₽13.15M</b> conference with flights, a Baikal trip and a gala dinner.</li>
+                        <li>Irkutsk pharmacies sold out of antibiotics on Oct 3 and are restocked at normal prices today.</li>
+                    </ul>
+                    <p>A plague scare that's taken seriously, but never confirmed, makes the case for this budget without triggering an embarrassing outbreak.</p>
+                </div>
+
+                <div class="mcard wide">
+                    <div class="k">Cross-connections</div>
+                    <h3>The same people and institutions keep showing up</h3>
+                    <div class="web">
+                        <div class="node"><b>Irkutsk institute ↔ China</b><span>Its staff joined the June Khabarovsk drill; its director spoke at the August Fuyuan drill, which practiced exactly this: plague imported from Russia.</span></div>
+                        <div class="node"><b>Irkutsk institute ↔ Mongolia</b><span>It grew live plague in Mongolia in July and August, bought isolation boxes for Mongolia's zoonotic center, and Mongolia then ordered border health checks on Oct 7.</span></div>
+                        <div class="node"><b>CanSino ↔ PLA ↔ Russia</b><span>China's military-linked vaccine maker has a Russian production partner (Petrovax) that won a vaccine approval on Sep 28, the eve of the hospitalization.</span></div>
+                        <div class="node"><b>Tianlong ↔ Russia</b><span>China's leading plague test-kit maker, run by Peng Niancai, has long-term Russian distribution partners and works with China's national CDC.</span></div>
+                        <div class="node"><b>National Media Group</b><span>Owns Izvestia and REN TV, the two outlets that published plague reports (including the criminal case) on Oct 2 and then deleted them.</span></div>
+                        <div class="node"><b>Putin ↔ Xi</b><span>May state visit (biosafety in the joint statement), Aug 31 meeting at the SCO summit, and another planned at APEC in November.</span></div>
+                    </div>
+                </div>
+
+                <div class="mcard wide">
+                    <div class="k">Meetings between major nations</div>
+                    <h3>Leading up to it, and what's next</h3>
+                    <div class="tbl-wrap">
+                        <table class="stk">
+                            <thead><tr><th>When</th><th>Who</th><th>Why it matters</th></tr></thead>
+                            <tbody>
+                                <tr><td class="n">May 20–21</td><td>Putin state visit to China</td><td>Joint statement backs biosafety and cross-border disease cooperation and a 2026 disaster-medicine drill</td></tr>
+                                <tr><td class="n">June</td><td>Russia–China exercise, Khabarovsk</td><td>Infectious-threat response; Irkutsk institute attends</td></tr>
+                                <tr><td class="n">Jul – Aug</td><td>Russia–Mongolia joint plague surveys</td><td>Live plague grown twice from border samples</td></tr>
+                                <tr><td class="n">Aug 24–27</td><td>China–Russia drill, Fuyuan</td><td>Scenario: plague imported from abroad; Irkutsk director speaks</td></tr>
+                                <tr><td class="n">Aug 31</td><td>Xi–Putin at the SCO summit, Bishkek</td><td>Second meeting of the year</td></tr>
+                                <tr><td class="n">Sep 1–4</td><td>Eastern Economic Forum, Vladivostok</td><td>Chinese Vice Premier Ding Xuexiang attends</td></tr>
+                                <tr><td class="n">Sep 28</td><td>Petrovax (Russia) / CanSino (China)</td><td>Russian approval for the CanSino-based vaccine made in Russia</td></tr>
+                                <tr><td class="n">Oct 6</td><td>China's foreign ministry</td><td>"Close cooperation on infectious disease, including plague"</td></tr>
+                                <tr><td class="n">Oct 6–7</td><td>Trump and the Kremlin</td><td>Trump offers help and says a Putin call is "scheduled very soon"; the Kremlin says it's open to it</td></tr>
+                                <tr><td class="n">Oct 21–22</td><td>CIS plague conference, Irkutsk</td><td>Upcoming; no word on cancellation</td></tr>
+                                <tr><td class="n">November</td><td>APEC in China</td><td>Putin says he'll meet Xi there</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mcard wide">
+                    <div class="k">Footnote · stock markets</div>
+                    <h3>Markets reacted, but that's not where the money is</h3>
+                    <p>Chinese "plague concept" stocks jumped when markets reopened on Oct 8 (North China Pharma +33% in three days, then −9.95%), and US protective-gear stocks
+                        jumped on Oct 5 (Alpha Pro Tech, Lakeland, Emergent, +13–15%) and faded. The only move before the news was state-owned Zhonghong Medical on Sep 30.</p>
+                </div>
+            </div>
+
+            <div class="bottom-line">
+                <h3>What the money says so far</h3>
+                <p>The biggest winners from a plague scare that's taken seriously but never confirmed are state bodies: Rospotrebnadzor and its plague institutes, whose ₽12B
+                    "Sanitary Shield" budget depends on threats like this, and China's CDC network. Around them sit a small set of suppliers with direct ties to both governments:
+                    Tianlong for plague tests, CanSino (PLA-linked) with its Russian partner Petrovax, Lamsystems for suits. The Irkutsk institute sits at the center of it all:
+                    field work in Mongolia, drills with China, contracts abroad and an international conference next week. None of this proves wrongdoing; it shows who gains and who's connected.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Red string board -->
+    <div class="rs" id="board">
+        <div class="container">
+            <div class="heading-section">
+                <div class="heading-sub fw-semibold style-1">Red string</div>
+                <div class="heading-title">Who's connected to whom</div>
+            </div>
+            <p class="rs-intro">Every company, institute, person and meeting found so far, joined by red string. Click any of them to see its people and connections.
+                Drag to move around, scroll or pinch to zoom.</p>
+            <div class="rs-wrap">
+                <div class="rs-stage">
+                    <svg id="rs-svg" role="img" aria-label="Network of organizations, people and meetings"></svg>
+                    <div class="rs-bar">
+                        <div class="rs-key" aria-label="Legend">
+                            <span><span class="rs-shape rs-shape-org"></span>Organization</span>
+                            <span><span class="rs-shape rs-shape-person"></span>Person</span>
+                            <span><span class="rs-shape rs-shape-event"></span>Meeting</span>
+                        </div>
+                        <div class="rs-zoom">
+                            <button type="button" id="rs-zin" aria-label="Zoom in">+</button>
+                            <button type="button" id="rs-zout" aria-label="Zoom out">−</button>
+                        </div>
+                    </div>
+                </div>
+                <aside class="rs-side">
+                    <div class="rs-find">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                        <input id="rs-search" list="rs-names" type="search" placeholder="Search people or companies" aria-label="Find on the board">
+                        <datalist id="rs-names"></datalist>
+                    </div>
+                    <div class="rs-panel" id="rs-panel" aria-live="polite"></div>
+                </aside>
+            </div>
+            <p class="rs-note">Built from company filings, official sites, government procurement records and the news sources listed below. A string means a documented link
+                (a job, a board seat, a deal, a meeting), not wrongdoing.</p>
+        </div>
+    </div>
+
+    <!-- Sources -->
+    <div class="flat-spacing" id="sources">
+        <div class="container">
+            <div class="heading-section mb-48">
+                <div class="heading-sub fw-semibold">Sources</div>
+                <div class="heading-title text-gradient-2">Where this comes from</div>
+            </div>
+            <div class="sources">
+                <div class="source">
+                    <div class="who">The Paper (澎湃新闻) · Oct 11</div>
+                    <div class="what">Full recap: hospital, quarantine, Rospotrebnadzor notices, WHO, lifting of measures, plague facts.</div>
+                    <a href="https://m.thepaper.cn/newsDetail_forward_34219376">m.thepaper.cn/newsDetail_forward_34219376</a>
+                </div>
+                <div class="source">
+                    <div class="who">Vision Times (看中国 / secretchina.com) · Oct 14</div>
+                    <div class="what">The P4 lab and Erenhot hospital leaks, provincial plague notices.</div>
+                    <a href="https://www.secretchina.com/news/gb/2026/10/14/1106060.html">secretchina.com/news/gb/2026/10/14/1106060.html</a>
+                </div>
+                <div class="source">
+                    <div class="who">Vision Times · Oct 12</div>
+                    <div class="what">"Plague suspected in several Inner Mongolia cities, many deaths rumored."</div>
+                    <a href="https://www.secretchina.com/news/gb/2026/10/12/1105984.html">secretchina.com/news/gb/2026/10/12/1105984.html</a>
+                </div>
+                <div class="source">
+                    <div class="who">Vision Times · Oct 9</div>
+                    <div class="what">The mother's statement, Redfield, Trump, Peskov, Tedros on X.</div>
+                    <a href="https://www.secretchina.com/news/gb/2026/10/09/1105843.html">secretchina.com/news/gb/2026/10/09/1105843.html</a>
+                </div>
+                <div class="source">
+                    <div class="who">Vision Times · Oct 8</div>
+                    <div class="what">CDC screening at JFK, the Fuyuan drill, the missing party secretary, Billingslea.</div>
+                    <a href="https://www.secretchina.com/news/gb/2026/10/08/1105818.html">secretchina.com/news/gb/2026/10/08/1105818.html</a>
+                </div>
+                <div class="source">
+                    <div class="who">Vision Times · Oct 7</div>
+                    <div class="what">Buryatia trip story, Tsydenov's post, viral X rumors, drill details.</div>
+                    <a href="https://www.secretchina.com/news/gb/2026/10/07/1105761.html">secretchina.com/news/gb/2026/10/07/1105761.html</a>
+                </div>
+                <div class="source">
+                    <div class="who">Lyudi Baikala (Люди Байкала), via Meduza · Oct 4–12</div>
+                    <div class="what">Hospital quarantines, FSB escorts, deleted posts, pharmacy fights, plague checklist, institute history.</div>
+                    <a href="https://meduza.io/feature/2026/10/06/v-irkutskoy-oblasti-umerla-sotrudnitsa-protivochumnogo-instituta-vlasti-vveli-karantin-no-otritsayut-ugrozu-chumy">meduza.io · Oct 6 report</a>
+                </div>
+                <div class="source">
+                    <div class="who">Lyudi Baikala · Oct 8 &amp; 12</div>
+                    <div class="what">Isolation boxes and suits contracts; history of the Irkutsk institute.</div>
+                    <a href="https://baikal-journal.ru/2026/10/12/gulyat-zdes-ne-strashno/">baikal-journal.ru/2026/10/12/gulyat-zdes-ne-strashno</a>
+                </div>
+                <div class="source">
+                    <div class="who">Asia-Russia / Mongolian National Broadcaster · Jul 28</div>
+                    <div class="what">Irkutsk institute in the joint Mongolia plague survey; live plague grown.</div>
+                    <a href="https://asiarussia.ru/news/51713/">asiarussia.ru/news/51713</a>
+                </div>
+                <div class="source">
+                    <div class="who">Rossiyskaya Gazeta · Sep 4</div>
+                    <div class="what">Rospotrebnadzor: high epizootic activity at the Saylyugem border hot spot.</div>
+                    <a href="https://rg.ru/2026/09/04/rospotrebnadzor-otslezhivaet-prirodnyj-ochag-chumy-na-granice-s-mongoliej.html">rg.ru · Sep 4</a>
+                </div>
+                <div class="source">
+                    <div class="who">Sina Finance, Economic Information Daily, Eastmoney, Yahoo Finance</div>
+                    <div class="what">Plague-concept stock rally, filings and daily prices (Sep 15 – Oct 14).</div>
+                </div>
+                <div class="source">
+                    <div class="who">Xinhua / CCTV via Sina, Guancha, China Economic Net · Oct 7–9</div>
+                    <div class="what">Russia's official notices: unknown-cause pneumonia, ~5,000 tests, measures lifted, no second case.</div>
+                </div>
+                <div class="source">
+                    <div class="who">Jiupai News, Jiefang Daily, China.com, Huashang Daily · Oct 12–13</div>
+                    <div class="what">Hulunbuir's plague notice and the health commission's "no plague, deleted" reply.</div>
+                </div>
+            </div>
+            <p style="margin-top: 32px; color: var(--neutral-500); font-size: 15px; line-height: 1.6; max-width: 820px;">
+                Vision Times (看中国) is an overseas Chinese outlet that is openly critical of the Chinese government. Mainland outlets are state-controlled.
+                Read both with that in mind. Searched through Baidu News, secretchina.com, Meduza, Lyudi Baikala, DuckDuckGo and market data on October 14, 2026.
+            </p>
+        </div>
+    </div>
+
+    <footer class="pt-foot">Irkutsk Plague Timeline · compiled October 14, 2026 · built on the Aigocy template</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+    <script src="assets/board-data.js"></script>
+    <script src="assets/board.js"></script>
+</body>
+</html>
