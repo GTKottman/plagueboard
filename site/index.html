@@ -309,6 +309,34 @@
             .dau-head h3 { text-align: left; }
             .dau-grid { grid-template-columns: 1fr; margin-left: 0; }
         }
+        .vchart .axis text { font-family: inherit; }
+        .media-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 24px; }
+        .media-bar button, .media-bar select, .media-bar input { height: 40px; border: 1px solid var(--neutral-200); background: #fff; color: var(--neutral-800); padding: 0 14px; font-size: 14px; border-radius: 999px; }
+        .media-bar button.on { background: var(--neutral-900, #111); border-color: var(--neutral-900, #111); color: #fff; }
+        .media-bar button, .media-bar select { display: inline-flex; align-items: center; width: auto; flex: 0 0 auto; line-height: 1; }
+        .media-bar select { max-width: 220px; padding-right: 28px; }
+        .media-bar input { display: block; width: auto; flex: 1 1 200px; min-width: 160px; }
+        .media-bar .count { margin-left: auto; color: var(--neutral-500); font-size: 14px; }
+        .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
+        .media-grid button { all: unset; cursor: pointer; display: block; min-width: 0; }
+        .media-grid img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: top; background: var(--neutral-100); border-radius: 6px; }
+        .media-grid button:hover img, .media-grid button:focus-visible img { outline: 2px solid var(--brand); outline-offset: 2px; }
+        .media-grid .cap { margin-top: 6px; font-size: 12px; line-height: 1.35; color: var(--neutral-600); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .media-grid .cap b { color: var(--neutral-800); font-weight: 600; }
+        .media-grid .vid { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--brand); }
+        .media-more { display: block; margin: 32px auto 0; height: 44px; padding: 0 24px; border: 1px solid var(--neutral-300); background: #fff; border-radius: 999px; font-size: 14px; }
+        .mbox { position: fixed; inset: 0; z-index: 1000; background: rgba(9, 9, 11, .92); display: none; grid-template-columns: 1fr 360px; }
+        .mbox.open { display: grid; }
+        .mbox .pic { overflow: auto; padding: 24px; text-align: center; }
+        .mbox .pic img { max-width: 100%; height: auto; background: #fff; }
+        .mbox .info { background: #fff; padding: 56px 24px 24px; overflow: auto; font-size: 14px; line-height: 1.55; color: var(--neutral-700); }
+        .mbox .info .meta { font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--neutral-500); margin-bottom: 12px; }
+        .mbox .info p { margin: 0 0 12px; }
+        .mbox .info a { color: var(--neutral-900, #111); text-decoration: underline; text-underline-offset: 3px; display: inline-block; margin: 4px 0; }
+        .mbox .x, .mbox .nav { position: absolute; border: 0; background: #fff; color: #111; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; line-height: 40px; text-align: center; cursor: pointer; }
+        .mbox .x { top: 12px; right: 12px; }
+        .mbox .nav.prev { top: 12px; right: 112px; } .mbox .nav.next { top: 12px; right: 62px; }
+        @media (max-width: 767px) { .mbox { grid-template-columns: 1fr; grid-template-rows: 1fr auto; } .mbox .info { max-height: 40vh; padding-top: 16px; } .mbox .pic { padding: 64px 8px 8px; } }
     </style>
 </head>
 
@@ -323,6 +351,7 @@
                 <a href="#leak">The leak</a>
                 <a href="#money">Follow the money</a>
                 <a href="#board">Red string</a>
+                <a href="#media">Media</a>
                 <a href="#sources">Sources</a>
             </nav>
             <a href="#leak" class="tf-btn">The 40-dead claim</a>
@@ -428,7 +457,7 @@
                     <p>Before anyone got sick: two China–Russia drills, two Xi–Putin meetings, and the Irkutsk institute growing live plague from an unusually active border hot spot.</p>
                 </div>
                 <div class="tl">
-                    <div class="ev official">
+                    <div class="ev official" id="e1">
                         <div class="date"><div class="d">May 20–21</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · China & Russia</span></div>
@@ -437,7 +466,7 @@
                             <div class="src">PRC Ministry of Foreign Affairs, joint statement of May 21</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e2">
                         <div class="date"><div class="d">June</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official</span></div>
@@ -446,7 +475,7 @@
                             <div class="src">Irkutsk institute website, via Lyudi Baikala Oct 12</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e3">
                         <div class="date"><div class="d">Jul 1 →</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · Mongolia</span></div>
@@ -455,7 +484,7 @@
                             <div class="src">Mongolian National Broadcaster via Asia-Russia, Jul 28; Rossiyskaya Gazeta, Jul 27</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e4">
                         <div class="date"><div class="d">Jul 25</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span></div>
@@ -464,7 +493,7 @@
                             <div class="src">Health and Family; Global Risk Atlas; Fortis Vita</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e5">
                         <div class="date"><div class="d">Aug 14–31</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official</span></div>
@@ -473,7 +502,7 @@
                             <div class="src">Zamin.uz, Sep 4; Rospotrebnadzor via RG, Sep 4</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e6">
                         <div class="date"><div class="d">Aug 24–27</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official</span></div>
@@ -486,7 +515,7 @@
                             <div class="src">The Paper, Health News (健康报), via Vision Times (看中国) Oct 7–8</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e7">
                         <div class="date"><div class="d">Aug 25 →</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Speculation</span></div>
@@ -496,7 +525,7 @@
                             <div class="src">Vision Times (看中国), Oct 8</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e8">
                         <div class="date"><div class="d">Aug 31</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official</span></div>
@@ -505,7 +534,7 @@
                             <div class="src">Xinhua, Aug 31 – Sep 5</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e9">
                         <div class="date"><div class="d">Sep 3–5</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · Russia</span></div>
@@ -514,7 +543,7 @@
                             <div class="src">RIA Novosti, Rossiyskaya Gazeta, Gazeta.ru, Sep 3–5</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e10">
                         <div class="date"><div class="d">Sep 4–8</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span></div>
@@ -523,7 +552,7 @@
                             <div class="src">Meduza / Lyudi Baikala, Sep 8</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e11">
                         <div class="date"><div class="d">Sep 20–25</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official</span></div>
@@ -532,7 +561,7 @@
                             <div class="src">conf2026-irkutsk.ru</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e12">
                         <div class="date"><div class="d">Sep 30</div><div class="y">2026 · Wed</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · China</span></div>
@@ -552,7 +581,7 @@
                     <p>How she got sick is still disputed. Three stories circulate, and Russia's health agency rejects the lab-accident one.</p>
                 </div>
                 <div class="tl">
-                    <div class="ev reported">
+                    <div class="ev reported" id="e13">
                         <div class="date"><div class="d">Sep 25</div><div class="y">2026 · Fri</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span><span class="tag rumor">Denied</span></div>
@@ -565,7 +594,7 @@
                             <div class="src">Russian media via Vision Times Oct 8; mother quoted by The Telegraph via Vision Times Oct 9</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e14">
                         <div class="date"><div class="d">Late Sep</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span></div>
@@ -575,7 +604,7 @@
                             <div class="src">Vision Times (看中国), Oct 7; Meduza, Oct 4</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e15">
                         <div class="date"><div class="d">~Sep 29</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official</span></div>
@@ -588,7 +617,7 @@
                             <div class="src">Baidu Baike; The Paper (澎湃) Oct 11; Lyudi Baikala via Meduza, Oct 6</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e16">
                         <div class="date"><div class="d">Late Sep</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span></div>
@@ -597,7 +626,7 @@
                             <div class="src">Lyudi Baikala via Meduza, Oct 4</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e17">
                         <div class="date"><div class="d">Oct 1 →</div><div class="y">2026 · Thu</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span></div>
@@ -606,7 +635,7 @@
                             <div class="src">Lyudi Baikala via Meduza, Oct 4–6</div>
                         </div>
                     </div>
-                    <div class="ev official key">
+                    <div class="ev official key" id="e18">
                         <div class="date"><div class="d">Oct 2</div><div class="y">2026 · Fri</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official</span></div>
@@ -627,7 +656,7 @@
                     <p>Russia's actions looked like a plague response, even while its words said otherwise. That gap is what made the story explode.</p>
                 </div>
                 <div class="tl">
-                    <div class="ev official">
+                    <div class="ev official" id="e19">
                         <div class="date"><div class="d">Oct 2</div><div class="y">2026 · Fri</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official</span></div>
@@ -641,7 +670,7 @@
                             <div class="src">The Paper Oct 11; Sina Finance</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e20">
                         <div class="date"><div class="d">Oct 2</div><div class="y">2026 · Fri</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span><span class="tag rumor">Deleted</span></div>
@@ -649,7 +678,7 @@
                             <ul><li>Pro-government <strong>Izvestia</strong> reports a <strong>criminal case</strong> under Article 236 part 2 (sanitary-rule violation causing death by negligence), then deletes it. REN TV, in the same media holding, deletes 5 posts about plague and ~200 hospitalized.</li><li>Telegram channels Mash and Baza say it was pneumonic plague; RIA says "an infectious disease, nature being established."</li><li>Irkutsk journalist Pavel Stepanov writes that she broke a tube of pneumonic plague and hid it. Unconfirmed.</li><li>Buryatia's head writes "the woman who died of plague," then edits it to "who <em>possibly</em> died of plague."</li><li>Russia's chief sanitary doctor Anna Popova flies in; the governor cites "suspicion of an especially dangerous infection."</li><li>That night, workers in gas masks and orange suits disinfect her apartment building, telling neighbors "a girl died, a deadly virus." They return twice more, later saying it's "for cockroaches."</li></ul>
                             <div class="src">Lyudi Baikala via Meduza, Oct 4–6; Zona Media, Oct 2; TGStat archive</div>
                         </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e21">
                         <div class="date"><div class="d">Oct 2</div><div class="y">2026 · Fri</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Russia</span></div>
@@ -663,7 +692,7 @@
                             <div class="src">SHOT, Ostorozhno Novosti, Pavel Stepanov (Telegram), Oct 2; The Insider, Oct 5</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e22">
                         <div class="date"><div class="d">Oct 3</div><div class="y">2026 · Sat</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span></div>
@@ -672,7 +701,7 @@
                             <div class="src">Lyudi Baikala, Oct 3–6</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e23">
                         <div class="date"><div class="d">Oct 4</div><div class="y">2026 · Sun</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span><span class="tag official">Official</span></div>
@@ -681,7 +710,7 @@
                             <div class="src">Lyudi Baikala via Meduza, Oct 4; TASS</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e24">
                         <div class="date"><div class="d">Oct 5</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span></div>
@@ -690,7 +719,7 @@
                             <div class="src">Lyudi Baikala, Oct 5–7</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e25">
                         <div class="date"><div class="d">Oct 2–6</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span></div>
@@ -700,7 +729,7 @@
                             <div class="src">Russian local media via Sina Finance and Vision Times, Oct 7</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e26">
                         <div class="date"><div class="d">Oct 5</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · US</span></div>
@@ -709,7 +738,7 @@
                             <div class="src">Vision Times, Oct 8</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e27">
                         <div class="date"><div class="d">~Oct 6</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Blog claim</span></div>
@@ -719,7 +748,7 @@
                         </div>
                     </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e28">
                         <div class="date"><div class="d">Oct 6</div><div class="y">2026 · Tue</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor</span></div>
@@ -729,7 +758,7 @@
                             <div class="src">X posts quoted by Vision Times, Oct 7</div>
                         </div>
                     </div>
-                    <div class="ev official key">
+                    <div class="ev official key" id="e29">
                         <div class="date"><div class="d">Oct 6</div><div class="y">2026 · Tue</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · Russia</span></div>
@@ -740,7 +769,7 @@
                             <div class="src">Rospotrebnadzor notice, via Xinhua and The Paper</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e30">
                         <div class="date"><div class="d">Oct 6</div><div class="y">2026 · Tue</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · WHO &amp; US</span></div>
@@ -754,7 +783,7 @@
                             </ul>
                             <div class="src">Xinmin Weekly; Vision Times Oct 8–9; China News Service</div>
                         </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e31">
                         <div class="date"><div class="d">Oct 4–8</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Russia</span></div>
@@ -769,7 +798,7 @@
                             </ul>
                             <div class="src">RFE/RL, Oct 5; Radio Svoboda, Oct 6–7; TASS, Oct 4; Rospotrebnadzor KhMAO, Oct 8</div>
                         </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e32">
                         <div class="date"><div class="d">Oct 6</div><div class="y">2026 · Tue</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Russia + China</span></div>
@@ -795,7 +824,7 @@
                 <div class="tl">
                     </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e33">
                         <div class="date"><div class="d">Oct 7</div><div class="y">2026 · Wed</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · Russia</span></div>
@@ -805,7 +834,7 @@
                             <div class="src">Rospotrebnadzor via Xinhua / CCTV; Changjiang Cloud; Guancha</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e34">
                         <div class="date"><div class="d">Oct 7</div><div class="y">2026 · Wed</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · WHO</span></div>
@@ -815,7 +844,7 @@
                             <div class="src">The Paper, Oct 11</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e35">
                         <div class="date"><div class="d">Oct 7</div><div class="y">2026 · Wed</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · US &amp; Kremlin</span></div>
@@ -830,7 +859,7 @@
                             <div class="src">Vision Times Oct 8–9; Sina Finance; China.com (中华网)</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e36">
                         <div class="date"><div class="d">Oct 7</div><div class="y">2026 · Wed</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · US</span></div>
@@ -839,7 +868,7 @@
                             <div class="src">US Embassy Moscow via Lyudi Baikala, Oct 7</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e37">
                         <div class="date"><div class="d">Oct 6–8</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · neighbours</span></div>
@@ -852,7 +881,7 @@
                             <div class="src">Mongolia MoH, Oct 7; Meduza, Oct 7; Moscow Times, Oct 6; Oct 8 reports on Armenia</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e38">
                         <div class="date"><div class="d">Oct 7</div><div class="y">2026 · Wed</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Russia</span></div>
@@ -865,7 +894,7 @@
                             <div class="src">Agentstvo via Focus.ua, Oct 7; WSJ/CNN/WaPo, Oct 7; Primpress, Oct 7</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e39">
                         <div class="date"><div class="d">Oct 5–8</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor · China, dissident media</span></div>
@@ -881,7 +910,7 @@
                             <div class="src">YouTube (Li Muyang, Hope Voice TV); bannedbook.org; NTD; X, Oct 5–8</div>
                         </div>
                     </div>
-                    <div class="ev official key">
+                    <div class="ev official key" id="e40">
                         <div class="date"><div class="d">Oct 8</div><div class="y">2026 · Thu</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · Russia</span></div>
@@ -891,7 +920,7 @@
                             <div class="src">Xinhua Oct 9; Lu Zhong Morning Post; The Paper</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e41">
                         <div class="date"><div class="d">Oct 8</div><div class="y">2026 · Thu</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · WHO</span></div>
@@ -901,7 +930,7 @@
                             <div class="src">Tedros on X, via Vision Times Oct 9</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e42">
                         <div class="date"><div class="d">Oct 8</div><div class="y">2026 · Thu</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span></div>
@@ -910,7 +939,7 @@
                             <div class="src">Lyudi Baikala, Oct 8; Sina Finance, Oct 8</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e43">
                         <div class="date"><div class="d">Oct 8</div><div class="y">2026 · Thu</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span></div>
@@ -919,7 +948,7 @@
                             <div class="src">Vision Times, Oct 8</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e44">
                         <div class="date"><div class="d">Oct 8</div><div class="y">2026 · Thu</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · Russia</span></div>
@@ -928,7 +957,7 @@
                             <div class="src">Interfax, Oct 8</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e45">
                         <div class="date"><div class="d">Oct 9</div><div class="y">2026 · Fri</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span></div>
@@ -948,7 +977,7 @@
                     <p>Border cities post warnings, Chinese in Russia head home, and anonymous "insiders" claim a cover-up. Officials say there is no plague in China.</p>
                 </div>
                 <div class="tl">
-                    <div class="ev official">
+                    <div class="ev official" id="e46">
                         <div class="date"><div class="d">Oct 9</div><div class="y">2026 · Fri</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · China</span></div>
@@ -957,7 +986,7 @@
                             <div class="src">Xinhua, Oct 9</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e47">
                         <div class="date"><div class="d">Oct 9</div><div class="y">2026 · Fri</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · China social media</span></div>
@@ -972,7 +1001,7 @@
                             <div class="src">Daily Weibo hot-search archive (justjavac/weibo-trending-hot-search on GitHub), Oct 6–9</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e48">
                         <div class="date"><div class="d">Oct 4–9</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor · US / online</span></div>
@@ -986,7 +1015,7 @@
                             <div class="src">Alex Jones Live, Oct 4; ZeroHedge, Oct 6–7; X; The Journal FactCheck, Oct 9</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e49">
                         <div class="date"><div class="d">Oct 10</div><div class="y">2026 · Sat</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span></div>
@@ -999,7 +1028,7 @@
                             <div class="src">Vision Times Oct 10; The Paper; TMTPost (钛媒体)</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e50">
                         <div class="date"><div class="d">Oct 10</div><div class="y">2026 · Sat</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · China</span></div>
@@ -1010,7 +1039,7 @@
                             <div class="src">Hulunbuir Media Center; China.com; Huashang Daily</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e51">
                         <div class="date"><div class="d">Oct 10</div><div class="y">2026 · Sat</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · WHO</span></div>
@@ -1024,7 +1053,7 @@
                             <div class="src">WHO Disease Outbreak News DON620, Oct 10</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e52">
                         <div class="date"><div class="d">Oct 10</div><div class="y">2026 · Sat</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · China state media</span></div>
@@ -1034,7 +1063,7 @@
                             <div class="src">CNR (央广网), Oct 10; Huasheng Online, Oct 10</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e53">
                         <div class="date"><div class="d">Oct 10</div><div class="y">2026 · Sat</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor</span></div>
@@ -1044,7 +1073,7 @@
                             <div class="src">NTD, Oct 10 &amp; 13; Liberty Times, Oct 13</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e54">
                         <div class="date"><div class="d">Oct 10–12</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor · China</span></div>
@@ -1059,7 +1088,7 @@
                             <div class="src">X; Threads; YouTube; Kanzhongguo, Oct 12</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e55">
                         <div class="date"><div class="d">Oct 11</div><div class="y">2026 · Sun</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · WHO</span></div>
@@ -1068,7 +1097,7 @@
                             <div class="src">Xinhua via Jiemian, Oct 11; The Paper; Vision Times Oct 11</div>
                         </div>
                     </div>
-                    <div class="ev rumor key">
+                    <div class="ev rumor key" id="e56">
                         <div class="date"><div class="d">Oct 11</div><div class="y">2026 · Sun</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor · unverified</span></div>
@@ -1082,7 +1111,7 @@
                             <div class="src">@LUOXIANGF on X, Oct 11, via Vision Times Oct 12 &amp; 14</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e57">
                         <div class="date"><div class="d">Oct 12</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · China</span></div>
@@ -1091,7 +1120,7 @@
                             <div class="src">Vision Times Oct 12 &amp; 14</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e58">
                         <div class="date"><div class="d">Oct 12</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor</span></div>
@@ -1100,7 +1129,7 @@
                             <div class="src">Vision Times (看中国), Oct 12</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e59">
                         <div class="date"><div class="d">Oct 12</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · Hong Kong &amp; Macau</span></div>
@@ -1109,7 +1138,7 @@
                             <div class="src">SCMP; Vision Times (看中国), Oct 15</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e60">
                         <div class="date"><div class="d">Oct 12</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Fact-check · Taiwan</span></div>
@@ -1119,7 +1148,7 @@
                             <div class="src">Taiwan FactCheck Center, Oct 12; MyGoPen, Oct 15; Bilibili</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e61">
                         <div class="date"><div class="d">Oct 12</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · China</span></div>
@@ -1128,7 +1157,7 @@
                             <div class="src">PRC Foreign Ministry, Oct 12</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e62">
                         <div class="date"><div class="d">Oct 12</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · China</span></div>
@@ -1138,7 +1167,7 @@
                             <div class="src">Tencent News (腾讯新闻), Oct 12</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e63">
                         <div class="date"><div class="d">Oct 12</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Taiwan</span></div>
@@ -1148,7 +1177,7 @@
                             <div class="src">SETN (三立) via Yahoo TW, Oct 12; Liberty Times, Oct 13</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e64">
                         <div class="date"><div class="d">Oct 12</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor · debunked</span></div>
@@ -1157,7 +1186,7 @@
                             <div class="src">Lenta.ru, Oct 12</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e65">
                         <div class="date"><div class="d">Oct 10–14</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Debunk · Chinese-language</span></div>
@@ -1171,7 +1200,7 @@
                             <div class="src">RT Chinese, Oct 10; Sina; MyGoPen; siliconcurtain Substack, Oct 14</div>
                         </div>
                     </div>
-                    <div class="ev official key">
+                    <div class="ev official key" id="e66">
                         <div class="date"><div class="d">Oct 13</div><div class="y">2026 · Tue</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · China</span></div>
@@ -1181,7 +1210,7 @@
                             <div class="src">Jiupai News; Yangcheng Evening News (金羊网); China.com</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e67">
                         <div class="date"><div class="d">Oct 13</div><div class="y">2026 · Tue</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported</span></div>
@@ -1190,7 +1219,7 @@
                             <div class="src">Economic Information Daily (Xinhua), Oct 13</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e68">
                         <div class="date"><div class="d">Oct 13</div><div class="y">2026 · Tue</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · Taiwan</span></div>
@@ -1204,7 +1233,7 @@
                             <div class="src">MS News, Oct 16 (Legislative Yuan session of Oct 13)</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e69">
                         <div class="date"><div class="d">Oct 13</div><div class="y">2026 · Tue</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor · debunked</span></div>
@@ -1213,7 +1242,7 @@
                             <div class="src">Newtalk (新頭殼, Taiwan), Oct 13</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e70">
                         <div class="date"><div class="d">Oct 13</div><div class="y">2026 · Tue</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · Russia</span></div>
@@ -1223,7 +1252,7 @@
                             <div class="src">Live Angarsk; IrkutskMedia, Oct 13</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e71">
                         <div class="date"><div class="d">Oct 13</div><div class="y">2026 · Tue</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · South Korea</span></div>
@@ -1232,7 +1261,7 @@
                             <div class="src">Newspim; Financial News, Oct 13</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e72">
                         <div class="date"><div class="d">Oct 13</div><div class="y">2026 · Tue</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor · China</span></div>
@@ -1246,7 +1275,7 @@
                             <div class="src">Epoch Times, Oct 13; Taipei Times, Oct 13–14</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e73">
                         <div class="date"><div class="d">Oct 14</div><div class="y">2026 · Wed</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor</span></div>
@@ -1256,7 +1285,7 @@
                             <div class="src">Vision Times (看中国), Oct 14</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e74">
                         <div class="date"><div class="d">Oct 14</div><div class="y">2026 · Wed</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor</span></div>
@@ -1270,7 +1299,7 @@
                             <div class="src">Newtalk (新頭殼, Taiwan), Oct 14</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e75">
                         <div class="date"><div class="d">Oct 14</div><div class="y">2026 · Wed</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · China social media</span></div>
@@ -1280,7 +1309,7 @@
                             <div class="src">Weibo hot-search archive, Oct 13–16; Sina hourly health report, Oct 13–14</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e76">
                         <div class="date"><div class="d">Oct 14</div><div class="y">2026 · Wed</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Hong Kong</span></div>
@@ -1289,7 +1318,7 @@
                             <div class="src">Newtalk, Oct 14; NTD, Oct 14; Mirror Daily, Oct 13</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e77">
                         <div class="date"><div class="d">Oct 14</div><div class="y">2026 · Wed</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · China</span></div>
@@ -1298,7 +1327,7 @@
                             <div class="src">Xinhua; People's Daily, Oct 14</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e78">
                         <div class="date"><div class="d">Oct 11–15</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · US</span></div>
@@ -1313,7 +1342,7 @@
                             <div class="src">Newsmax, Oct 11; Jamestown, Oct 14; NTD column, Oct 14; Daily Star, Oct 15</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e79">
                         <div class="date"><div class="d">Oct 14–15</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor · online</span></div>
@@ -1327,7 +1356,7 @@
                             <div class="src">The Collapse Experiment, Oct 14; Chiang Rai Times, Oct 12–14; The People's Voice, Oct 15</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e80">
                         <div class="date"><div class="d">Oct 15</div><div class="y">2026 · Thu</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · China</span></div>
@@ -1336,7 +1365,7 @@
                             <div class="src">Vision Times (看中国), Oct 15; RFA Mandarin, Oct 12</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e81">
                         <div class="date"><div class="d">Oct 15</div><div class="y">2026 · Thu</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · Russia</span></div>
@@ -1345,7 +1374,7 @@
                             <div class="src">14.ru (Yakutsk), Oct 15</div>
                         </div>
                     </div>
-                    <div class="ev reported key">
+                    <div class="ev reported key" id="e82">
                         <div class="date"><div class="d">Oct 15</div><div class="y">2026 · Thu</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Russia</span></div>
@@ -1355,7 +1384,7 @@
                             <div class="src">Daily Storm, Oct 15; SOTA / Ircity (conference)</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e83">
                         <div class="date"><div class="d">Oct 15</div><div class="y">2026 · Thu</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor</span></div>
@@ -1368,7 +1397,7 @@
                             <div class="src">X (@plkjhgfd489030, @LUOXIANGF), Oct 15; NTD, Oct 15; Aboluowang, Oct 11</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e84">
                         <div class="date"><div class="d">Oct 15</div><div class="y">2026 · Thu</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · experts</span></div>
@@ -1382,7 +1411,7 @@
                             <div class="src">PolitiFact, Oct 12; Moscow Times, Oct 13; Think Global Health, Oct 14; BASIC, Oct 15; Raw Story, Oct 12</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e85">
                         <div class="date"><div class="d">Oct 16</div><div class="y">2026 · Fri</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor</span></div>
@@ -1391,7 +1420,7 @@
                             <div class="src">Newtalk, Oct 16</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e86">
                         <div class="date"><div class="d">Oct 16</div><div class="y">2026 · Fri</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · Europe</span></div>
@@ -1400,7 +1429,7 @@
                             <div class="src">ECDC Communicable Disease Threats Report, week 42 (10–16 Oct)</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e87">
                         <div class="date"><div class="d">Oct 14–16</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · overseas Chinese</span></div>
@@ -1415,7 +1444,7 @@
                             <div class="src">Epoch Times, Oct 14–16; Lyudi Baikala, Oct 16</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e88">
                         <div class="date"><div class="d">Oct 17</div><div class="y">2026 · Sat</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor · China</span></div>
@@ -1425,7 +1454,7 @@
                             <div class="src">Epoch Times, Oct 17; NTD, Oct 17</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e89">
                         <div class="date"><div class="d">Oct 17</div><div class="y">2026 · Sat</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor · China</span></div>
@@ -1438,7 +1467,7 @@
                             <div class="src">NTD, Oct 17</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e90">
                         <div class="date"><div class="d">Oct 18</div><div class="y">2026 · Sun</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Russia + China</span></div>
@@ -1452,7 +1481,7 @@
                             <div class="src">Telegram channel scans, Oct 18; Weibo hot-search archive, Oct 17–18; NTD, Oct 17</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e91">
                         <div class="date"><div class="d">Oct 18</div><div class="y">2026 · Sun</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · Ukraine</span></div>
@@ -1461,7 +1490,7 @@
                             <div class="src">LIGA.net, Oct 18</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e92">
                         <div class="date"><div class="d">Oct 19</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Europe</span></div>
@@ -1470,7 +1499,7 @@
                             <div class="src">Politico (Claudia Chiappa), Oct 19</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e93">
                         <div class="date"><div class="d">Oct 19</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor · debunked</span></div>
@@ -1479,7 +1508,7 @@
                             <div class="src">Obozrevatel.Vrn, Oct 19; Vremya Voronezha</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e94">
                         <div class="date"><div class="d">Oct 19</div><div class="y">2026 · Mon</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Hong Kong</span></div>
@@ -1491,7 +1520,7 @@
                             <div class="src">on.cc, Oct 19</div>
                         </div>
                     </div>
-                    <div class="ev official">
+                    <div class="ev official" id="e95">
                         <div class="date"><div class="d">Oct 21</div><div class="y">2026 · Wed</div></div>
                         <div class="card">
                             <div class="top"><span class="tag official">Official · Russia</span></div>
@@ -1500,7 +1529,7 @@
                             <div class="src">Irkutsk institute website; conf2026-irkutsk.ru; Lyudi Baikala, Oct 22</div>
                         </div>
                     </div>
-                    <div class="ev rumor">
+                    <div class="ev rumor" id="e96">
                         <div class="date"><div class="d">Oct 21–26</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag rumor">Rumor · Reddit</span></div>
@@ -1514,7 +1543,7 @@
                             <div class="src">r/RussianPlague26, Oct 21–26</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e97">
                         <div class="date"><div class="d">Oct 22–23</div><div class="y">2026</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Hainan</span></div>
@@ -1526,7 +1555,7 @@
                             <div class="src">Zerkalo.io, Oct 23 (search snippet); Weibo hot-search archive, Oct 22</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e98">
                         <div class="date"><div class="d">Oct 27</div><div class="y">2026 · Tue</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Russia</span></div>
@@ -1535,7 +1564,7 @@
                             <div class="src">Lyudi Baikala (Telegram + newsletter), Oct 27</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e99">
                         <div class="date"><div class="d">Oct 30</div><div class="y">2026 · Fri</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · US</span></div>
@@ -1549,7 +1578,7 @@
                             <div class="src">The Wall Street Journal, "The troubled history of Russia's anti-plague institute," retold by Agentstvo, SOTA and Lyudi Baikala, Oct 30</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e100">
                         <div class="date"><div class="d">Oct 31</div><div class="y">2026 · Sat</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Russia + China</span></div>
@@ -1561,7 +1590,7 @@
                             <div class="src">Telegram channel searches, Oct 31; Weibo hot-search archive, Oct 19–31</div>
                         </div>
                     </div>
-                    <div class="ev reported">
+                    <div class="ev reported" id="e101">
                         <div class="date"><div class="d">Nov 1</div><div class="y">2026 · Sun</div></div>
                         <div class="card">
                             <div class="top"><span class="tag reported">Reported · Russia</span></div>
@@ -1994,6 +2023,35 @@
         </div>
     </div>
 
+    <!-- Media -->
+    <div class="flat-spacing" id="media">
+        <div class="container">
+            <div class="heading-section mb-48">
+                <div class="heading-sub fw-semibold">Media</div>
+                <div class="heading-title text-gradient-2">Every screenshot and video we logged</div>
+            </div>
+            <div class="media-bar" role="group" aria-label="Filter media">
+                <button type="button" class="on" data-v="">All</button>
+                <button type="button" data-v="picture">Pictures</button>
+                <button type="button" data-v="video">Videos</button>
+                <select id="m-country" aria-label="Country"><option value="">Every country</option></select>
+                <select id="m-plat" aria-label="Platform"><option value="">Every platform</option></select>
+                <input id="m-q" type="search" placeholder="Search who or what" aria-label="Search">
+                <span class="count" id="m-count"></span>
+            </div>
+            <div class="media-grid" id="m-grid"></div>
+            <button type="button" class="media-more" id="m-more" hidden>Show more</button>
+            <p class="sub" style="margin-top:24px;color:var(--neutral-500);font-size:13px">Screenshots are small, reduced-quality copies. Each one is a claim as someone made it, not a finding. Click one to read it; the source link opens the original.</p>
+        </div>
+    </div>
+    <div class="mbox" id="mbox" role="dialog" aria-modal="true" aria-label="Screenshot">
+        <div class="pic"><img id="mb-img" alt=""></div>
+        <div class="info" id="mb-info"></div>
+        <button type="button" class="nav prev" id="mb-prev" aria-label="Previous">‹</button>
+        <button type="button" class="nav next" id="mb-next" aria-label="Next">›</button>
+        <button type="button" class="x" id="mb-x" aria-label="Close">×</button>
+    </div>
+
     <!-- Sources -->
     <div class="flat-spacing" id="sources">
         <div class="container">
@@ -2142,6 +2200,58 @@
             setInterval(() => { if (!document.hidden) ping(true); }, 30000);
             document.addEventListener("visibilitychange", () => { if (!document.hidden) ping(true); });
             let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(draw, 150); });
+        })();
+    </script>
+    <script>
+        (() => {
+            const sec = document.getElementById("media"), grid = document.getElementById("m-grid"), more = document.getElementById("m-more");
+            const esc = t => String(t || "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+            const PAGE = 60;
+            let all = [], list = [], shown = 0, cur = -1, kind = "";
+            function start() {
+                const cs = new Map(), ps = new Map();
+                for (const d of all) { if (d.c) cs.set(d.c, (cs.get(d.c) || 0) + 1); if (d.p) ps.set(d.p, (ps.get(d.p) || 0) + 1); }
+                const fill = (id, m) => { const el = document.getElementById(id); for (const [k, n] of [...m].sort((a, b) => b[1] - a[1])) el.add(new Option(`${k} (${n})`, k)); };
+                fill("m-country", cs); fill("m-plat", ps);
+                sec.querySelectorAll(".media-bar button").forEach(b => b.onclick = () => { sec.querySelectorAll(".media-bar button").forEach(x => x.classList.toggle("on", x === b)); kind = b.dataset.v; apply(); });
+                document.getElementById("m-country").onchange = apply; document.getElementById("m-plat").onchange = apply;
+                let t; document.getElementById("m-q").oninput = () => { clearTimeout(t); t = setTimeout(apply, 200); };
+                more.onclick = page;
+                apply();
+            }
+            function apply() {
+                const c = document.getElementById("m-country").value, p = document.getElementById("m-plat").value, q = document.getElementById("m-q").value.trim().toLowerCase();
+                list = all.filter(d => (!kind || d.v === kind) && (!c || d.c === c) && (!p || d.p === p) && (!q || (d.w + " " + d.x.join(" ") + " " + d.p).toLowerCase().includes(q)));
+                document.getElementById("m-count").textContent = `${list.length} of ${all.length}`;
+                grid.innerHTML = ""; shown = 0; page();
+            }
+            function page() {
+                const html = list.slice(shown, shown + PAGE).map((d, i) => `<button type="button" data-i="${shown + i}"><img src="assets/media/t/${d.k}.jpg" width="160" height="120" loading="lazy" alt="${esc(d.w)}"><div class="cap">${d.v === "video" ? '<span class="vid">Video · </span>' : ""}<b>${esc(d.d)}</b> ${esc(d.w)}</div></button>`).join("");
+                grid.insertAdjacentHTML("beforeend", html);
+                shown = Math.min(list.length, shown + PAGE);
+                more.hidden = shown >= list.length;
+            }
+            grid.onclick = e => { const b = e.target.closest("button[data-i]"); if (b) open(+b.dataset.i); };
+            const box = document.getElementById("mbox"), img = document.getElementById("mb-img"), info = document.getElementById("mb-info");
+            function open(i) {
+                cur = (i + list.length) % list.length; const d = list[cur];
+                img.src = `assets/media/f/${d.k}.jpg`; img.alt = d.w;
+                info.innerHTML = `<div class="meta">${esc([d.d, d.v === "video" ? "Video" : "", d.p, d.c].filter(Boolean).join(" · "))}</div>` +
+                    d.x.map(x => `<p>${esc(x)}</p>`).join("") + (d.n > d.x.length ? `<p>+ ${d.n - d.x.length} more claims from this page in the claims sheet.</p>` : "") +
+                    (d.u ? `<a href="${esc(d.u)}" target="_blank" rel="noopener">Open the original source</a><br>` : "") +
+                    (d.e ? `<a href="#${esc(d.e)}" data-close>See it on the timeline${d.et ? ": " + esc(d.et) : ""}</a>` : "");
+                box.classList.add("open"); box.querySelector(".pic").scrollTop = 0; document.body.style.overflow = "hidden";
+            }
+            function close() { box.classList.remove("open"); img.removeAttribute("src"); document.body.style.overflow = ""; }
+            document.getElementById("mb-x").onclick = close;
+            document.getElementById("mb-prev").onclick = () => open(cur - 1);
+            document.getElementById("mb-next").onclick = () => open(cur + 1);
+            box.onclick = e => { if (e.target === box || e.target.classList.contains("pic") || e.target.hasAttribute("data-close")) close(); };
+            document.addEventListener("keydown", e => { if (!box.classList.contains("open")) return; if (e.key === "Escape") close(); if (e.key === "ArrowLeft") open(cur - 1); if (e.key === "ArrowRight") open(cur + 1); });
+            // the gallery's data loads only when the section comes near the screen
+            const io = new IntersectionObserver(es => { if (!es.some(e => e.isIntersecting)) return; io.disconnect();
+                const sc = document.createElement("script"); sc.src = "assets/media-data.js"; sc.onload = () => { all = window.MEDIA || []; start(); }; document.body.appendChild(sc); }, { rootMargin: "600px" });
+            io.observe(sec);
         })();
     </script>
 </body>
