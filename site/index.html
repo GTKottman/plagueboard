@@ -277,6 +277,25 @@
         .vchart .tip { position: absolute; top: 0; pointer-events: none; background: #fff; border: 1px solid var(--neutral-200); padding: 6px 10px; font-size: 13px; color: var(--neutral-800); white-space: nowrap; display: none; transform: translateX(-50%); }
         .vchart .tip b { font-variant-numeric: tabular-nums; }
         @media (max-width: 767px) { .pt-visits { grid-template-columns: 1fr; gap: 40px; } .pt-visits .n { font-size: 32px; } }
+        .pt-comments { max-width: 760px; margin: 0 auto; padding: 72px 16px 0; scroll-margin-top: 90px; }
+        .pt-comments h2 { font-size: clamp(28px, 4vw, 40px); line-height: 1.1; margin: 0 0 8px; color: var(--primary); }
+        .pt-comments .sub { color: var(--neutral-500); font-size: 15px; margin: 0 0 28px; }
+        .cm { padding: 18px 0; border-top: 1px solid var(--neutral-200); }
+        .cm .who { font-weight: 700; color: var(--primary); }
+        .cm .when { font-size: 13px; color: var(--neutral-500); margin-left: 8px; }
+        .cm .body { margin-top: 6px; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--neutral-700); line-height: 1.55; }
+        .cm-none { color: var(--neutral-500); padding: 18px 0; border-top: 1px solid var(--neutral-200); }
+        .cm-form { margin-top: 28px; padding: 24px; border-radius: 24px; background: var(--neutral-50); }
+        .cm-form label { display: block; font-weight: 600; font-size: 14px; color: var(--neutral-700); margin-bottom: 6px; }
+        .cm-form input[type=text], .cm-form textarea { width: 100%; box-sizing: border-box; font: inherit; padding: 12px 14px; border: 1px solid var(--neutral-200); border-radius: 12px; background: #fff; color: var(--neutral-900, #111); margin-bottom: 16px; }
+        .cm-form textarea { min-height: 120px; resize: vertical; }
+        .cm-form input:focus, .cm-form textarea:focus { outline: 2px solid var(--brand); outline-offset: 1px; }
+        .cm-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+        .cm-form .row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .cm-form button { font: inherit; font-weight: 600; padding: 12px 28px; border: 0; border-radius: 99px; background: var(--brand); color: #fff; cursor: pointer; }
+        .cm-form button:disabled { opacity: .5; cursor: default; }
+        #cm-status { font-size: 15px; color: var(--neutral-700); }
+        #cm-status.err { color: var(--brand); }
         footer.pt-foot { padding: 40px 0 60px; color: var(--neutral-500); font-size: 14px; text-align: center; }
         @media (max-width: 575px) { .container { padding-left: 16px; padding-right: 16px; } .hero-lede { font-size: 17px; } }
 
@@ -355,6 +374,7 @@
                 <a href="#board">Red string</a>
                 <a href="#media">Media</a>
                 <a href="#sources">Sources</a>
+                <a href="#comments">Comments</a>
             </nav>
             <a href="#leak" class="tf-btn">The 40-dead claim</a>
         </div>
@@ -2146,6 +2166,19 @@
             <div class="vchart" id="c-all"></div>
         </div>
     </section>
+    <section class="pt-comments" id="comments" aria-label="Comments">
+        <h2>Comments</h2>
+        <p class="sub">Pick any name. Say what you want, within reason. Comments show up once they are verified.</p>
+        <div id="cm-list"></div>
+        <form class="cm-form" id="cm-form">
+            <label for="cm-name">Name</label>
+            <input type="text" id="cm-name" maxlength="40" required autocomplete="nickname">
+            <label for="cm-text">Comment</label>
+            <textarea id="cm-text" maxlength="2000" required></textarea>
+            <div class="hp" aria-hidden="true"><label for="cm-web">Website</label><input type="text" id="cm-web" tabindex="-1" autocomplete="off"></div>
+            <div class="row"><button type="submit" id="cm-send">Send</button><span id="cm-status" role="status"></span></div>
+        </form>
+    </section>
     <footer class="pt-foot">Irkutsk Plague Timeline · compiled October 14, 2026 · built on the Aigocy template</footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="assets/board-data.js"></script>
@@ -2254,6 +2287,35 @@
             const io = new IntersectionObserver(es => { if (!es.some(e => e.isIntersecting)) return; io.disconnect();
                 const sc = document.createElement("script"); sc.src = "assets/media-data.js"; sc.onload = () => { all = window.MEDIA || []; start(); }; document.body.appendChild(sc); }, { rootMargin: "600px" });
             io.observe(sec);
+        })();
+    </script>
+    <script>
+        (() => {
+            const list = document.getElementById("cm-list"), form = document.getElementById("cm-form"), st = document.getElementById("cm-status"), btn = document.getElementById("cm-send");
+            function show(items) {
+                list.replaceChildren();
+                if (!items.length) { const n = document.createElement("div"); n.className = "cm-none"; n.textContent = "No comments yet."; list.append(n); return; }
+                for (const c of items) {
+                    const d = document.createElement("div"); d.className = "cm";
+                    const w = document.createElement("span"); w.className = "who"; w.textContent = c.name;
+                    const t = document.createElement("span"); t.className = "when"; t.textContent = new Date(c.ts).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+                    const b = document.createElement("div"); b.className = "body"; b.textContent = c.text;
+                    d.append(w, t, b); list.append(d);
+                }
+            }
+            fetch("/api/comments").then(r => r.json()).then(show).catch(() => show([]));
+            form.onsubmit = async e => {
+                e.preventDefault(); btn.disabled = true; st.className = ""; st.textContent = "Sending...";
+                try {
+                    const r = await fetch("/api/comments", { method: "POST", headers: { "content-type": "application/json" },
+                        body: JSON.stringify({ name: document.getElementById("cm-name").value, text: document.getElementById("cm-text").value, website: document.getElementById("cm-web").value }) });
+                    const j = await r.json().catch(() => ({}));
+                    if (r.ok) { st.textContent = "Thanks. Your comment shows up here once it's verified."; document.getElementById("cm-text").value = ""; }
+                    else if (r.status === 429) { st.className = "err"; st.textContent = `You can post again in ${j.minutes} minute${j.minutes === 1 ? "" : "s"}.`; }
+                    else { st.className = "err"; st.textContent = j.error || "Could not send. Try again."; }
+                } catch { st.className = "err"; st.textContent = "Could not send. Try again."; }
+                btn.disabled = false;
+            };
         })();
     </script>
 </body>

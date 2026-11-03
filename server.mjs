@@ -1,3 +1,4 @@
+// Also holds a moderated comments section: visitors post (1 per 50 min per IP), the owner approves at /admin#<ADMIN_TOKEN>.
 // Serves site/ and counts visitors: who is on the page right now (heartbeats) and unique visitors all time.
 // A visitor = sha256(salt + IP + user agent); the salt is made on first start and kept in DATA_DIR, never in git.
 import http from "node:http";
@@ -89,6 +90,148 @@ function record(req, beat) {
   fs.appendFile(LOG, JSON.stringify(v) + "\n", () => {});
 }
 
+// ---- comments ----
+// comments.jsonl is an append-only event log: a full comment line when posted, then {id, status} lines when approved or deleted.
+const COMMENTS_LOG = path.join(DATA, "comments.jsonl");
+const COMMENT_GAP = 50 * 60 * 1000;
+const MAX_BODY = 8 * 1024;
+const comments = new Map(); // id -> {id, ts, name, text, ipHash, status}
+const lastPost = new Map(); // ipHash -> ts of last accepted comment (kept even after delete)
+if (fs.existsSync(COMMENTS_LOG)) {
+  for (const line of fs.readFileSync(COMMENTS_LOG, "utf8").split("\n")) {
+    try {
+      const e = JSON.parse(line);
+      if (e.text !== undefined) { comments.set(e.id, e); lastPost.set(e.ipHash, Math.max(lastPost.get(e.ipHash) || 0, e.ts)); }
+      else if (comments.has(e.id)) comments.get(e.id).status = e.status;
+    } catch {}
+  }
+}
+const adminToken = process.env.ADMIN_TOKEN || "";
+
+function clientHash(req) {
+  const ip = String(req.headers["x-forwarded-for"] || req.socket.remoteAddress || "").split(",")[0].trim();
+  return crypto.createHash("sha256").update(salt + ip).digest("hex");
+}
+
+function json(res, code, obj) {
+  res.writeHead(code, { "content-type": "application/json", "cache-control": "no-store" });
+  res.end(JSON.stringify(obj));
+}
+
+function readJson(req, res, cb) {
+  let size = 0; const chunks = []; let dead = false;
+  req.on("data", (c) => {
+    if (dead) return;
+    size += c.length;
+    if (size > MAX_BODY) { dead = true; json(res, 413, { error: "Too big." }); req.destroy(); return; }
+    chunks.push(c);
+  });
+  req.on("end", () => {
+    if (dead) return;
+    let body;
+    try { body = JSON.parse(Buffer.concat(chunks).toString("utf8")); } catch { return json(res, 400, { error: "Bad JSON." }); }
+    if (!body || typeof body !== "object" || Array.isArray(body)) return json(res, 400, { error: "Bad JSON." });
+    cb(body);
+  });
+}
+
+const pub = (c) => ({ id: c.id, ts: c.ts, name: c.name, text: c.text });
+const byNewest = (a, b) => b.ts - a.ts;
+
+function postComment(req, res) {
+  readJson(req, res, (b) => {
+    if (typeof b.website === "string" && b.website !== "") return json(res, 200, { ok: true }); // honeypot: pretend it worked
+    const name = typeof b.name === "string" ? b.name.trim() : "";
+    const text = typeof b.text === "string" ? b.text.trim() : "";
+    if (name.length < 1 || name.length > 40) return json(res, 400, { error: "Name must be 1 to 40 characters." });
+    if (text.length < 1 || text.length > 2000) return json(res, 400, { error: "Comment must be 1 to 2000 characters." });
+    const ipHash = clientHash(req);
+    const now = Date.now();
+    const wait = (lastPost.get(ipHash) || 0) + COMMENT_GAP - now;
+    if (wait > 0) return json(res, 429, { error: "Too soon.", minutes: Math.ceil(wait / 60000) });
+    const c = { id: crypto.randomBytes(8).toString("hex"), ts: now, name, text, ipHash, status: "pending" };
+    comments.set(c.id, c);
+    lastPost.set(ipHash, now);
+    fs.appendFile(COMMENTS_LOG, JSON.stringify(c) + "\n", () => {});
+    json(res, 200, { ok: true });
+  });
+}
+
+function adminAllowed(req, res) {
+  if (!adminToken) { json(res, 503, { error: "Admin is not set up." }); return false; }
+  const a = crypto.createHash("sha256").update(String(req.headers["x-admin-token"] || "")).digest();
+  const b = crypto.createHash("sha256").update(adminToken).digest();
+  if (!crypto.timingSafeEqual(a, b)) { json(res, 401, { error: "Wrong token." }); return false; }
+  return true;
+}
+
+function adminApi(req, res, url) {
+  if (!adminAllowed(req, res)) return;
+  if (req.method === "GET" && url.pathname === "/api/admin/comments") {
+    const all = [...comments.values()].filter((c) => c.status !== "deleted").sort(byNewest);
+    const strip = ({ ipHash, ...c }) => c;
+    return json(res, 200, { pending: all.filter((c) => c.status === "pending").map(strip), approved: all.filter((c) => c.status === "approved").map(strip) });
+  }
+  const m = url.pathname.match(/^\/api\/admin\/comments\/([0-9a-f]+)\/(approve|delete)$/);
+  if (req.method === "POST" && m) {
+    const c = comments.get(m[1]);
+    if (!c || c.status === "deleted") return json(res, 404, { error: "No such comment." });
+    c.status = m[2] === "approve" ? "approved" : "deleted";
+    fs.appendFile(COMMENTS_LOG, JSON.stringify({ id: c.id, status: c.status }) + "\n", () => {});
+    return json(res, 200, { ok: true });
+  }
+  json(res, 404, { error: "Not found." });
+}
+
+// Admin page: text goes in with textContent only, never as HTML. The token is read from the URL hash so it never reaches a server log.
+const ADMIN_HTML = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>Comments admin</title>
+<style>
+body{font:16px/1.5 system-ui,sans-serif;margin:0;background:#fff;color:#111}
+main{max-width:760px;margin:0 auto;padding:32px 16px 80px}
+h1{font-size:26px;margin:0 0 4px} h2{font-size:15px;letter-spacing:.08em;text-transform:uppercase;color:#6b6b6b;margin:36px 0 12px}
+.c{border:1px solid #e5e5e5;border-radius:12px;padding:16px 18px;margin-bottom:12px;background:#fafafa}
+.meta{font-size:13px;color:#6b6b6b;margin-bottom:6px} .meta b{color:#111;font-size:15px}
+.t{white-space:pre-wrap;overflow-wrap:anywhere}
+.row{display:flex;gap:8px;margin-top:12px}
+button{font:inherit;font-weight:600;padding:8px 18px;border-radius:99px;border:1px solid #d4d4d4;background:#fff;color:#111;cursor:pointer}
+button.ok{background:#FD3A25;border-color:#FD3A25;color:#fff} button:hover{opacity:.85}
+#msg{color:#FD3A25;margin:12px 0}.none{color:#6b6b6b}
+</style></head><body><main><h1>Comments</h1><div id="msg"></div>
+<h2>Waiting for verify</h2><div id="pending"></div><h2>On the site</h2><div id="approved"></div></main>
+<script>
+const token = decodeURIComponent(location.hash.slice(1));
+const msg = document.getElementById("msg");
+async function call(method, url) {
+  const r = await fetch(url, { method, headers: { "x-admin-token": token } });
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(j.error || ("Error " + r.status));
+  return j;
+}
+function card(c, withVerify) {
+  const d = document.createElement("div"); d.className = "c";
+  const m = document.createElement("div"); m.className = "meta";
+  const b = document.createElement("b"); b.textContent = c.name;
+  m.append(b, " · " + new Date(c.ts).toLocaleString());
+  const t = document.createElement("div"); t.className = "t"; t.textContent = c.text;
+  const row = document.createElement("div"); row.className = "row";
+  if (withVerify) { const v = document.createElement("button"); v.className = "ok"; v.textContent = "Verify"; v.onclick = () => act(c.id, "approve"); row.append(v); }
+  const x = document.createElement("button"); x.textContent = "Delete"; x.onclick = () => act(c.id, "delete"); row.append(x);
+  d.append(m, t, row); return d;
+}
+function fill(id, list, withVerify) {
+  const el = document.getElementById(id); el.replaceChildren();
+  if (!list.length) { const n = document.createElement("div"); n.className = "none"; n.textContent = "Nothing here."; el.append(n); }
+  for (const c of list) el.append(card(c, withVerify));
+}
+async function act(id, what) { try { await call("POST", "/api/admin/comments/" + id + "/" + what); load(); } catch (e) { msg.textContent = e.message; } }
+async function load() {
+  try { const j = await call("GET", "/api/admin/comments"); msg.textContent = ""; fill("pending", j.pending, true); fill("approved", j.approved, false); }
+  catch (e) { msg.textContent = e.message; }
+}
+load();
+</script></body></html>`;
+
 const TYPES = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml",
   ".png": "image/png", ".jpg": "image/jpeg", ".woff": "font/woff", ".woff2": "font/woff2", ".ttf": "font/ttf",
   ".json": "application/json", ".map": "application/json", ".gif": "image/gif", ".eot": "application/vnd.ms-fontobject", ".txt": "text/plain" };
@@ -99,6 +242,15 @@ http.createServer((req, res) => {
     if (req.method === "POST") record(req, url.searchParams.has("beat"));
     res.writeHead(200, { "content-type": "application/json", "cache-control": "no-store" });
     return res.end(JSON.stringify(counts()));
+  }
+  if (url.pathname === "/api/comments") {
+    if (req.method === "POST") return postComment(req, res);
+    return json(res, 200, [...comments.values()].filter((c) => c.status === "approved").sort(byNewest).map(pub));
+  }
+  if (url.pathname.startsWith("/api/admin/")) return adminApi(req, res, url);
+  if (url.pathname === "/admin") {
+    res.writeHead(200, { "content-type": "text/html; charset=utf-8", "cache-control": "no-store", "x-robots-tag": "noindex" });
+    return res.end(ADMIN_HTML);
   }
   let file = path.join(SITE, decodeURIComponent(url.pathname));
   if (!file.startsWith(SITE)) { res.writeHead(403); return res.end(); }
