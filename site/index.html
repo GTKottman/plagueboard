@@ -262,10 +262,19 @@
         @media (max-width: 767px) { .sources { grid-template-columns: 1fr; } }
 
         .heading-section .heading-title { font-size: clamp(40px, 6vw, 72px); line-height: 1.02; }
-        .pt-visits { display: flex; justify-content: center; gap: 48px; padding: 48px 16px 0; text-align: center; }
-        .pt-visits .n { font-size: 32px; font-weight: 700; color: var(--neutral-900, #111); line-height: 1; font-variant-numeric: tabular-nums; }
+        .pt-visits { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; max-width: 1040px; margin: 0 auto; padding: 56px 16px 0; }
+        .pt-visits .n { font-size: 40px; font-weight: 700; color: var(--neutral-900, #111); line-height: 1; font-variant-numeric: tabular-nums; }
         .pt-visits .l { margin-top: 8px; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--neutral-500); }
-        @media (max-width: 575px) { .pt-visits { gap: 28px; } .pt-visits .n { font-size: 26px; } }
+        .pt-visits .sub { margin-top: 4px; font-size: 13px; color: var(--neutral-500); }
+        .pt-visits .live-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--brand); margin-right: 10px; vertical-align: middle; position: relative; top: -4px; }
+        .vchart { position: relative; margin-top: 20px; height: 160px; }
+        .vchart svg { display: block; width: 100%; height: 100%; overflow: visible; }
+        .vchart .axis text { fill: var(--neutral-500); font-size: 11px; }
+        .vchart .axis path, .vchart .axis line { stroke: var(--neutral-200); }
+        .vchart .grid line { stroke: var(--neutral-100); }
+        .vchart .tip { position: absolute; top: 0; pointer-events: none; background: #fff; border: 1px solid var(--neutral-200); padding: 6px 10px; font-size: 13px; color: var(--neutral-800); white-space: nowrap; display: none; transform: translateX(-50%); }
+        .vchart .tip b { font-variant-numeric: tabular-nums; }
+        @media (max-width: 767px) { .pt-visits { grid-template-columns: 1fr; gap: 40px; } .pt-visits .n { font-size: 32px; } }
         footer.pt-foot { padding: 40px 0 60px; color: var(--neutral-500); font-size: 14px; text-align: center; }
         @media (max-width: 575px) { .container { padding-left: 16px; padding-right: 16px; } .hero-lede { font-size: 17px; } }
 
@@ -2064,19 +2073,76 @@
     </div>
 
     <section class="pt-visits" aria-label="Visitors">
-        <div><div class="n" id="v-hour">–</div><div class="l">Visitors past hour</div></div>
-        <div><div class="n" id="v-day">–</div><div class="l">Past day</div></div>
-        <div><div class="n" id="v-week">–</div><div class="l">Past week</div></div>
+        <div>
+            <div class="n"><span class="live-dot" aria-hidden="true"></span><span id="v-now">–</span></div>
+            <div class="l">Here right now</div>
+            <div class="sub">People on this page, past 24 hours</div>
+            <div class="vchart" id="c-now"></div>
+        </div>
+        <div>
+            <div class="n" id="v-all">–</div>
+            <div class="l">All time</div>
+            <div class="sub" id="v-since">Unique visitors</div>
+            <div class="vchart" id="c-all"></div>
+        </div>
     </section>
     <footer class="pt-foot">Irkutsk Plague Timeline · compiled October 14, 2026 · built on the Aigocy template</footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
     <script src="assets/board-data.js"></script>
     <script src="assets/board.js"></script>
     <script>
-        fetch("/api/visits", { method: "POST" }).then(r => r.ok ? r.json() : null).then(c => {
-            if (!c) return;
-            for (const k of ["hour", "day", "week"]) document.getElementById("v-" + k).textContent = c[k].toLocaleString();
-        }).catch(() => {});
+        (() => {
+            const fmtDay = d3.timeFormat("%b %-d"), fmtTime = d3.timeFormat("%H:%M"), fmtFull = d3.timeFormat("%b %-d, %H:%M");
+            function chart(id, rows, xFmt, tipFmt, label, step) {
+                const el = document.getElementById(id);
+                el.innerHTML = "";
+                if (rows.length < 2) { el.innerHTML = '<div class="sub">The graph fills in as data comes in.</div>'; return; }
+                const W = el.clientWidth, H = el.clientHeight, m = { t: 8, r: 8, b: 24, l: 32 };
+                const data = rows.map(([t, v]) => ({ t: new Date(t), v }));
+                const x = d3.scaleTime().domain(d3.extent(data, d => d.t)).range([m.l, W - m.r]);
+                const y = d3.scaleLinear().domain([0, Math.max(1, d3.max(data, d => d.v))]).nice(4).range([H - m.b, m.t]);
+                const svg = d3.select(el).append("svg").attr("viewBox", `0 0 ${W} ${H}`).attr("role", "img").attr("aria-label", label);
+                svg.append("g").attr("class", "grid").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4).tickSize(-(W - m.l - m.r)).tickFormat("")).call(g => g.select(".domain").remove());
+                svg.append("g").attr("class", "axis").attr("transform", `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(Math.max(2, Math.floor(W / 110))).tickFormat(xFmt).tickSizeOuter(0));
+                svg.append("g").attr("class", "axis").attr("transform", `translate(${m.l},0)`).call(d3.axisLeft(y).ticks(4).tickFormat(d3.format("d")).tickSize(0).tickPadding(8)).call(g => g.select(".domain").remove());
+                const curve = step ? d3.curveStepAfter : d3.curveMonotoneX;
+                svg.append("path").datum(data).attr("fill", "var(--brand)").attr("fill-opacity", .08)
+                    .attr("d", d3.area().curve(curve).x(d => x(d.t)).y0(y(0)).y1(d => y(d.v)));
+                svg.append("path").datum(data).attr("fill", "none").attr("stroke", "var(--brand)").attr("stroke-width", 2)
+                    .attr("d", d3.line().curve(curve).x(d => x(d.t)).y(d => y(d.v)));
+                const rule = svg.append("line").attr("stroke", "var(--neutral-400)").attr("y1", m.t).attr("y2", H - m.b).style("display", "none");
+                const dot = svg.append("circle").attr("r", 4.5).attr("fill", "var(--brand)").attr("stroke", "#fff").attr("stroke-width", 2).style("display", "none");
+                const tip = d3.select(el).append("div").attr("class", "tip");
+                const bis = d3.bisector(d => d.t).center;
+                svg.append("rect").attr("x", m.l).attr("y", 0).attr("width", W - m.l - m.r).attr("height", H).attr("fill", "transparent")
+                    .on("pointermove", ev => {
+                        const d = data[bis(data, x.invert(d3.pointer(ev)[0]))], px = x(d.t);
+                        rule.attr("x1", px).attr("x2", px).style("display", null);
+                        dot.attr("cx", px).attr("cy", y(d.v)).style("display", null);
+                        tip.style("display", "block").style("left", Math.min(Math.max(px, 70), W - 70) + "px").html(`${tipFmt(d.t)} · <b>${d.v.toLocaleString()}</b>`);
+                    })
+                    .on("pointerleave", () => { rule.style("display", "none"); dot.style("display", "none"); tip.style("display", "none"); });
+            }
+            let last = null;
+            function draw() {
+                if (!last) return;
+                chart("c-now", last.live || [], fmtTime, fmtFull, "People on this page, past 24 hours", true);
+                chart("c-all", last.allTime || [], fmtDay, fmtDay, "Unique visitors all time, by day", false);
+            }
+            function show(c) {
+                if (!c) return;
+                last = c;
+                document.getElementById("v-now").textContent = c.now.toLocaleString();
+                document.getElementById("v-all").textContent = c.all.toLocaleString();
+                document.getElementById("v-since").textContent = "Unique visitors since " + fmtDay(new Date(c.since));
+                draw();
+            }
+            const ping = beat => fetch("/api/visits" + (beat ? "?beat=1" : ""), { method: "POST" }).then(r => r.ok ? r.json() : null).then(show).catch(() => {});
+            ping(false);
+            setInterval(() => { if (!document.hidden) ping(true); }, 30000);
+            document.addEventListener("visibilitychange", () => { if (!document.hidden) ping(true); });
+            let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(draw, 150); });
+        })();
     </script>
 </body>
 </html>
