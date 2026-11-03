@@ -1,4 +1,4 @@
-// Also holds a moderated comments section: visitors post (1 per 50 min per IP), the owner approves at /admin#<ADMIN_TOKEN>.
+// Also holds a moderated comments section: visitors post (1 per 50 min per IP), the owner approves at /admin#<token>.
 // Serves site/ and counts visitors: who is on the page right now (heartbeats) and unique visitors all time.
 // A visitor = sha256(salt + IP + user agent); the salt is made on first start and kept in DATA_DIR, never in git.
 import http from "node:http";
@@ -106,10 +106,14 @@ if (fs.existsSync(COMMENTS_LOG)) {
     } catch {}
   }
 }
+// The owner's admin token is checked by its sha256 (safe to publish; the token itself is never in the repo).
+// ADMIN_TOKEN in the environment, if set, replaces it.
+const ADMIN_TOKEN_SHA256 = "4a992632bd51f75003e8485ac3966f6ef354f672c6dea941f9bad724aeeec7a4";
 const adminToken = process.env.ADMIN_TOKEN || "";
 
 function clientHash(req) {
-  const ip = String(req.headers["x-forwarded-for"] || req.socket.remoteAddress || "").split(",")[0].trim();
+  // last x-forwarded-for entry = the address the proxy saw; earlier entries can be faked by the sender
+  const ip = String(req.headers["x-forwarded-for"] || req.socket.remoteAddress || "").split(",").pop().trim();
   return crypto.createHash("sha256").update(salt + ip).digest("hex");
 }
 
@@ -158,9 +162,8 @@ function postComment(req, res) {
 }
 
 function adminAllowed(req, res) {
-  if (!adminToken) { json(res, 503, { error: "Admin is not set up." }); return false; }
   const a = crypto.createHash("sha256").update(String(req.headers["x-admin-token"] || "")).digest();
-  const b = crypto.createHash("sha256").update(adminToken).digest();
+  const b = adminToken ? crypto.createHash("sha256").update(adminToken).digest() : Buffer.from(ADMIN_TOKEN_SHA256, "hex");
   if (!crypto.timingSafeEqual(a, b)) { json(res, 401, { error: "Wrong token." }); return false; }
   return true;
 }
@@ -234,7 +237,7 @@ load();
 
 const TYPES = { ".html": "text/html; charset=utf-8", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml",
   ".png": "image/png", ".jpg": "image/jpeg", ".woff": "font/woff", ".woff2": "font/woff2", ".ttf": "font/ttf",
-  ".json": "application/json", ".map": "application/json", ".gif": "image/gif", ".eot": "application/vnd.ms-fontobject", ".txt": "text/plain" };
+  ".json": "application/json", ".map": "application/json", ".gif": "image/gif", ".eot": "application/vnd.ms-fontobject", ".txt": "text/plain", ".ico": "image/x-icon" };
 
 http.createServer((req, res) => {
   const url = new URL(req.url, "http://x");
