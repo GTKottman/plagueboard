@@ -279,6 +279,8 @@
         @media (max-width: 767px) { .pt-visits { grid-template-columns: 1fr; gap: 40px; } .pt-visits .n { font-size: 32px; } }
         .pt-comments { max-width: 760px; margin: 0 auto; padding: 72px 16px 0; scroll-margin-top: 90px; }
         .pt-comments h2 { font-size: clamp(28px, 4vw, 40px); line-height: 1.1; margin: 0 0 8px; color: var(--primary); }
+        .pt-proof { max-width: 760px; margin: 72px auto 0; padding: 24px 16px; border-top: 2px solid var(--brand); border-bottom: 1px solid var(--neutral-200); font-size: clamp(20px, 2.6vw, 26px); font-weight: 600; color: var(--primary); text-align: center; }
+        .pt-proof a { color: var(--brand); text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
         .pt-comments .sub { color: var(--neutral-500); font-size: 15px; margin: 0 0 28px; }
         .cm { padding: 18px 0; border-top: 1px solid var(--neutral-200); }
         .cm .who { font-weight: 700; color: var(--primary); }
@@ -2373,6 +2375,7 @@
             <div class="vchart" id="c-all"></div>
         </div>
     </section>
+    <p class="pt-proof" id="proof">Have proof? Reach out: <a href="mailto:becchini@plagueboard.com">becchini@plagueboard.com</a></p>
     <section class="pt-comments" id="comments" aria-label="Comments">
         <h2>Comments</h2>
         <p class="sub">Pick any name. Say what you want, within reason. Comments show up once they are verified.</p>
