@@ -63,6 +63,53 @@
         @media (max-width: 991px) { .answer { grid-template-columns: 1fr; } .answer .verdict { padding: 32px; } .answer .verdict h3 { font-size: 30px; } }
         @media (max-width: 480px) { .answer .facts { grid-template-columns: 1fr; } }
 
+
+        /* overview */
+        .ov { padding: 150px 0 96px; }
+        .ov-head { max-width: 900px; margin-bottom: 48px; }
+        .ov-head .hero-kicker { margin-bottom: 24px; }
+        .ov-title { font-size: clamp(36px, 5vw, 64px); line-height: 1.04; letter-spacing: -.04em; font-weight: 600; color: var(--primary); }
+        .ov-title .accent { color: var(--brand); }
+        .ov-meta { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .ov-meta > span { padding: 6px 14px; border-radius: 99px; background: rgba(255,255,255,.6); font-weight: 600; font-size: 14px; color: var(--neutral-700); }
+        .ov-rule { margin-top: 16px; font-size: 16px; color: var(--neutral-600); }
+        .ov-h { font-size: 30px; line-height: 1.15; letter-spacing: -.03em; font-weight: 600; margin-bottom: 24px; color: var(--primary); }
+        .ov-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; align-items: start; }
+        .ov-stand, .ov-latest { border-radius: 32px; padding: 40px; background: var(--neutral-50); box-shadow: 0 1px 0 #fff inset, 0 3px 3px rgba(0,0,0,.06); }
+        .ov-who { columns: 2; column-gap: 40px; }
+        .ov-who .ov-group { break-inside: avoid; margin-bottom: 32px; }
+        .ov-who .ov-group:last-child { margin-bottom: 0; }
+        .ov-group ul { margin-top: 14px; display: grid; gap: 12px; }
+        .ov-group li { font-size: 16px; line-height: 1.5; color: var(--neutral-700); }
+        .ov-group li a, .ov-list .when { white-space: nowrap; font-size: 14px; font-weight: 600; color: var(--neutral-500); text-decoration: underline; text-underline-offset: 3px; }
+        .ov-group li a:hover { color: var(--brand); }
+        .tag.open { color: var(--neutral-700); background: var(--neutral-200); }
+        .tag.open::before { background: transparent; box-shadow: 0 0 0 2px currentColor inset; }
+        .ov-list { display: grid; gap: 0; }
+        .ov-list li { border-top: 1px solid var(--neutral-200); }
+        .ov-list li:first-child { border-top: 0; }
+        .ov-list a { display: grid; grid-template-columns: 64px 1fr; gap: 4px 16px; padding: 14px 0; color: var(--primary); }
+        .ov-list .when { text-decoration: none; padding-top: 3px; }
+        .ov-list .ttl { font-size: 16px; line-height: 1.4; font-weight: 600; }
+        .ov-list .tag { grid-column: 2; justify-self: start; font-size: 11px; padding: 3px 10px; }
+        .ov-list a:hover .ttl { color: var(--brand); }
+        .ov-all { display: inline-block; margin-top: 16px; font-weight: 600; color: var(--primary); text-decoration: underline; text-underline-offset: 4px; }
+        .ov-all:hover { color: var(--brand); }
+        .ov-h-counts { margin-top: 64px; }
+        .ov-counts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .ov-go { margin-top: 64px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .ov-go a { display: flex; flex-direction: column; gap: 4px; padding: 18px 22px; border-radius: 20px; background: var(--neutral-50);
+            box-shadow: 0 -2px 0 #E9E9E9 inset, 0 2px 3px rgba(0,0,0,.08); color: var(--primary); }
+        .ov-go a strong { font-size: 17px; font-weight: 600; }
+        .ov-go a span { font-size: 14px; color: var(--neutral-500); }
+        .ov-go a:hover strong { color: var(--brand); }
+        .ov a:focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 6px; }
+        .ov-grid > *, .ov-who > *, .ov-counts > *, .ov-go > * { min-width: 0; }
+        @media (max-width: 1199px) { .ov-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 991px) { .ov { padding-top: 120px; } .ov-counts, .ov-go { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 767px) { .ov-who { columns: 1; } .ov-stand, .ov-latest { padding: 24px; } }
+        @media (max-width: 480px) { .ov-counts, .ov-go { grid-template-columns: 1fr; } }
+
         /* tags + legend */
         .tag { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
             padding: 5px 12px; border-radius: 99px; }
@@ -368,7 +415,7 @@
         <div class="inner">
             <span class="brand">Irkutsk Plague Timeline</span>
             <nav>
-                <a href="#answer">Short answer</a>
+                <a href="#answer">Overview</a>
                 <a href="#timeline">Timeline</a>
                 <a href="#p5">Sanya / dengue</a>
                 <a href="#leak">The leak</a>
@@ -382,71 +429,104 @@
         </div>
     </div>
 
-    <!-- Hero -->
-    <div class="section-hero v1">
-        <div class="hero-image"></div>
+    <!-- Overview -->
+    <div class="ov" id="answer">
         <div class="container">
-            <div class="content-wrap text-center">
-                <div class="hero-kicker"><span class="dot"></span>Updated November 2, 2026 · Monday</div>
-                <h1 class="hero-title text-gradient-1">From a Siberian lab<br>to a leak about <span class="accent">40 dead</span></h1>
-                <p class="hero-lede">
-                    The Irkutsk "pneumonic plague" scare, step by step: a cross-border plague drill in August, one researcher's death,
-                    Russia's denials, China's border warnings, and the anonymous posts claiming a hospital cover-up in Inner Mongolia.
-                </p>
-                <div class="hero-meta">
+            <div class="ov-head">
+                <div class="hero-kicker"><span class="dot"></span>Claims tracker · Irkutsk, Inner Mongolia, Sanya</div>
+                <h1 class="ov-title">The Irkutsk plague scare: <span class="accent">who claims what</span></h1>
+                <div class="ov-meta">
+                    <span><strong>Updated Nov 2, 2026</strong></span>
                     <span>May 20 → Nov 2, 2026</span>
-                    <span>140 events</span>
+                    <span><span class="js-ev-count">140</span> events</span>
                     <span>Chinese, Russian, Taiwan, Korean, US &amp; WHO sources</span>
                 </div>
+                <p class="ov-rule">Every item says who claims it. Nothing here is judged true or false.</p>
             </div>
-        </div>
-    </div>
 
-    <!-- Short answer -->
-    <div class="flat-spacing" id="answer">
-        <div class="container">
-            <div class="heading-section mb-48">
-                <div class="heading-sub fw-semibold">Short answer</div>
-                <div class="heading-title text-gradient-2">Where it stands today</div>
-            </div>
-            <div class="answer">
-                <div class="verdict">
-                    <h3>One confirmed death. No confirmed spread. A very loud rumor.</h3>
-                    <p>
-                        Russia still calls the death "pneumonia of unknown cause" and lifted every quarantine on October 8.
-                        The WHO says it has no evidence of ongoing spread, but by the WSJ's count it asked Russia five times for details and the pathogen is still unnamed.
-                        No official source in China reports a plague case. The claim of 40+ dead at an Inner Mongolia hospital comes from one
-                        anonymous post relayed by one X account on October 11, and nothing so far backs it up.
-                    </p>
-                    <p>
-                        <strong>Sanya, Hainan (late October):</strong> building sites, a worker camp and a hotel were sealed. Officials say dengue and chikungunya,
-                        all tests negative. The same X account behind the "40 dead" post says a Russian brought in plague.
-                        <a href="#p5">See every claim, with links and screenshots</a>.
-                    </p>
-                </div>
-                <div class="facts">
-                    <div class="fact">
-                        <div class="num">1</div>
-                        <div class="lbl">Confirmed death: a 28-year-old lab worker at the Irkutsk anti-plague institute, Oct 2</div>
-                        <div class="tag official">Official</div>
-                    </div>
-                    <div class="fact">
-                        <div class="num">~200</div>
-                        <div class="lbl">Contacts put under medical watch (189 by one count), all released by Oct 8</div>
-                        <div class="tag official">Official</div>
-                    </div>
-                    <div class="fact">
-                        <div class="num">~5,000</div>
-                        <div class="lbl">Lab tests, no dangerous pathogen found. Contacts had 2 COVID and 2 rhinovirus cases.</div>
-                        <div class="tag official">Official · Russia</div>
-                    </div>
-                    <div class="fact">
-                        <div class="num red">40+</div>
-                        <div class="lbl">Dead at an Erenhot hospital, claimed by an anonymous "insider." Not confirmed by anyone.</div>
-                        <div class="tag rumor">Rumor</div>
+            <div class="ov-grid">
+                <div class="ov-stand">
+                    <h2 class="ov-h">Where it stands</h2>
+                    <div class="ov-who">
+                        <div class="ov-group">
+                            <div class="tag official">Officials say</div>
+                            <ul>
+                                <li><strong>Russia:</strong> one lab worker at the Irkutsk anti-plague institute died Oct 2 of "pneumonia of unknown cause." No lab accident, no plague cases in the area. <a href="#e29">Oct 6</a></li>
+                                <li><strong>Russia:</strong> ~5,000 tests found no dangerous pathogen; all quarantine lifted in Irkutsk and Shelekhov. <a href="#e40">Oct 8</a></li>
+                                <li><strong>WHO:</strong> no evidence of ongoing transmission, public risk low; a lab exposure "cannot be fully excluded." <a href="#e55">Oct 11</a></li>
+                                <li><strong>China CDC:</strong> September report lists 1 plague case and 1 plague death, with no place or date. <a href="#s-cdc">Oct 29</a></li>
+                                <li><strong>Sanya community officials:</strong> the sealed sites are about dengue and chikungunya. <a href="#s-bjn">Oct 31</a></li>
+                            </ul>
+                        </div>
+                        <div class="ov-group">
+                            <div class="tag reported">Media report</div>
+                            <ul>
+                                <li><strong>WSJ:</strong> WHO asked Russia five times for details; Russia never named the pathogen. <a href="#e99">Oct 30</a></li>
+                                <li><strong>Lyudi Baikala:</strong> FSB and police were at the worker's family's door first. <a href="#e98">Oct 27</a></li>
+                                <li><strong>Lyudi Baikala:</strong> the Defence Ministry will pay ₽2.18 billion to rebuild the institute. <a href="#e101">Nov 1</a></li>
+                            </ul>
+                        </div>
+                        <div class="ov-group">
+                            <div class="tag rumor">Rumor: posts claim</div>
+                            <ul>
+                                <li><strong>X @LUOXIANGF</strong>, relaying one anonymous "hospital insider": 70+ plague patients, 40+ dead at an Erenhot hospital. <a href="#e56">Oct 11</a></li>
+                                <li><strong>The same X account:</strong> "a Russian brought in the plague" to a sealed Sanya hotel. <a href="#s-luo">Oct 29</a></li>
+                                <li><strong>NTD:</strong> "hundreds" infected and 1,000+ sealed at Sanya sites. <a href="#s-nov2">Nov 2</a></li>
+                            </ul>
+                        </div>
+                        <div class="ov-group">
+                            <div class="tag open">Nobody has said yet</div>
+                            <ul>
+                                <li>Which pathogen killed the worker. <a href="#e100">Oct 31</a></li>
+                                <li>Where and when China's September plague death happened. <a href="#s-cdc">Oct 29</a></li>
+                                <li>How many people are sick in Sanya: no official count. <a href="#s-nov2">Nov 2</a></li>
+                                <li>Why the institute's plague conference moved to Nov 11–12. <a href="#e95">Oct 21</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+
+                <div class="ov-latest">
+                    <h2 class="ov-h">Latest</h2>
+                    <ol class="ov-list" id="ov-latest"></ol>
+                    <a class="ov-all" href="#timeline">Full timeline, <span class="js-ev-count">140</span> events →</a>
+                </div>
             </div>
+
+            <h2 class="ov-h ov-h-counts">Counts, and who gives them</h2>
+            <div class="ov-counts">
+                <div class="fact">
+                    <div class="num">1</div>
+                    <div class="lbl">Death: a 28-year-old lab worker at the Irkutsk anti-plague institute, Oct 2</div>
+                    <div class="tag official">Official count · Russia</div>
+                </div>
+                <div class="fact">
+                    <div class="num">~200</div>
+                    <div class="lbl">Contacts put under medical watch (189 by one count), all released by Oct 8</div>
+                    <div class="tag official">Official count · Russia</div>
+                </div>
+                <div class="fact">
+                    <div class="num">1</div>
+                    <div class="lbl">Plague death in China's September report. No place, date or age given.</div>
+                    <div class="tag official">Official count · China CDC</div>
+                </div>
+                <div class="fact">
+                    <div class="num red">40+</div>
+                    <div class="lbl">Dead at an Erenhot hospital, claimed by one anonymous post relayed by one X account</div>
+                    <div class="tag rumor">Claimed · 1 anonymous post</div>
+                </div>
+            </div>
+
+            <nav class="ov-go" aria-label="Sections">
+                <a href="#timeline"><strong>Timeline</strong><span>Every event, May → Nov</span></a>
+                <a href="#p5"><strong>Sanya / dengue</strong><span>Late Oct → Nov claims</span></a>
+                <a href="#leak"><strong>The 40-dead claim</strong><span>The anonymous posts</span></a>
+                <a href="#money"><strong>Follow the money</strong><span>Budgets, contracts, people</span></a>
+                <a href="#board"><strong>Red string</strong><span>Who is tied to whom</span></a>
+                <a href="#media"><strong>Media</strong><span>Screenshots and posts</span></a>
+                <a href="#sources"><strong>Sources</strong><span>Every link</span></a>
+                <a href="#comments"><strong>Comments</strong><span>Have proof? Post it</span></a>
+            </nav>
         </div>
     </div>
 
@@ -2527,6 +2607,33 @@
                 btn.disabled = false;
             };
         })();
+    </script>
+    <script>
+    // Overview: newest timeline events and the event count, read from the timeline itself
+    (function () {
+        var M = { Jan:1, Feb:2, Mar:3, Apr:4, May:5, Jun:6, June:6, Jul:7, Aug:8, Sep:9, Oct:10, Nov:11, Dec:12 };
+        var evs = Array.prototype.slice.call(document.querySelectorAll('#timeline .ev[id]'));
+        document.querySelectorAll('.js-ev-count').forEach(function (el) { el.textContent = evs.length; });
+        var rows = evs.map(function (ev, i) {
+            var d = (ev.querySelector('.date .d') || {}).textContent || '';
+            var parts = d.match(/(Jan|Feb|Mar|Apr|May|June|Jun|Jul|Aug|Sep|Oct|Nov|Dec)|\d{1,2}/g) || [];
+            var mon = 0, day = 0, lastMon = '', label = '';
+            parts.forEach(function (t) { if (M[t]) { mon = M[t]; lastMon = t; } else { day = +t; label = lastMon + ' ' + t; } });
+            return { ev: ev, key: mon * 100 + day, i: i, label: label || d };
+        }).filter(function (r) { return r.key % 100; });
+        rows.sort(function (a, b) { return b.key - a.key || b.i - a.i; });
+        var ol = document.getElementById('ov-latest');
+        rows.slice(0, 6).forEach(function (r) {
+            var tag = r.ev.querySelector('.card .top .tag'), h = r.ev.querySelector('.card h4');
+            var li = document.createElement('li'), a = document.createElement('a');
+            a.href = '#' + r.ev.id;
+            a.innerHTML = '<span class="when"></span><span class="ttl"></span>';
+            a.querySelector('.when').textContent = r.label;
+            a.querySelector('.ttl').textContent = h ? h.textContent : '';
+            if (tag) { var t = tag.cloneNode(true); a.appendChild(t); }
+            li.appendChild(a); ol.appendChild(li);
+        });
+    })();
     </script>
 </body>
 </html>
